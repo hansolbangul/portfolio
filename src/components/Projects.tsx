@@ -1,197 +1,178 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+import { useTheme } from "@/context/ThemeContext";
 import Image from "next/image";
-import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { BsGithub, BsGlobe } from "react-icons/bs";
-import { FiChevronDown } from "react-icons/fi";
-import ProjectModal from "./ProjectModal";
-import type { ProjectDetail } from "@/types/project";
+import Link from "next/link";
+import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 
-const projects: ProjectDetail[] = [
+interface Project {
+  title: string;
+  description: string;
+  image: string;
+  tech: string[];
+  github?: string;
+  demo?: string;
+}
+
+const projects: Project[] = [
   {
     title: "Portfolio Website",
-    period: "2023.12 - 2024.01",
-    team: "Personal Project",
-    role: "Frontend Developer",
-    description: "우주를 테마로 한 인터랙티브 포트폴리오 웹사이트입니다. Framer Motion을 활용한 다양한 애니메이션과 인터랙션을 구현했습니다.",
-    features: [
-      "우주 테마의 인터랙티브 디자인",
-      "반응형 레이아웃",
-      "스크롤 기반 애니메이션",
-      "프로젝트 상세 정보 모달",
-    ],
-    techStack: {
-      frontend: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
-      backend: [],
-      database: [],
-      deployment: ["Vercel"],
-    },
-    challenges: [
-      {
-        problem: "SSR과 클라이언트 사이드 애니메이션 충돌",
-        solution: "useState와 useEffect를 활용하여 hydration 문제 해결",
-        learned: "Next.js의 SSR 동작 방식과 클라이언트 사이드 렌더링의 차이점 이해",
-      },
-    ],
-    outcome: {
-      achievements: [
-        "Framer Motion을 활용한 부드러운 애니메이션 구현",
-        "최적화된 성능 (Lighthouse 점수 90+ 달성)",
-      ],
-      improvements: [
-        "더 많은 인터랙티브 요소 추가",
-        "성능 최적화",
-      ],
-      future: [
-        "블로그 섹션 추가",
-        "다크/라이트 모드 지원",
-      ],
-    },
-    image: "/project1.png",
+    description:
+      "A modern, responsive portfolio website built with Next.js and TailwindCSS. Features dark/light mode and smooth animations.",
+    image: "/projects/portfolio.png",
+    tech: ["Next.js", "TypeScript", "TailwindCSS", "Framer Motion"],
     github: "https://github.com/yourusername/portfolio",
-    demo: "https://portfolio-demo.com",
+    demo: "https://your-portfolio-url.com",
   },
   // Add more projects here
 ];
 
 const Projects = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const projectId = searchParams.get("project");
+  const { theme } = useTheme();
 
-  const handleProjectClick = (index: number) => {
-    // 현재 URL에 project 쿼리 파라미터만 추가
-    const url = new URL(window.location.href);
-    url.searchParams.set("project", index.toString());
-    window.history.pushState({}, "", url.toString());
-    
-    // 강제로 리렌더링하여 모달 표시
-    router.refresh();
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.2,
+        duration: 0.5,
+        ease: "easeOut",
+      },
+    }),
   };
-
-  const handleCloseModal = () => {
-    // project 쿼리 파라미터만 제거
-    const url = new URL(window.location.href);
-    url.searchParams.delete("project");
-    window.history.pushState({}, "", url.toString());
-    
-    // 강제로 리렌더링
-    router.refresh();
-  };
-
-  const selectedProject = projectId ? projects[parseInt(projectId)] : null;
 
   return (
-    <section className="relative min-h-screen w-full py-20">
-      <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-12 text-center"
-        >
-          <h2 className="text-4xl font-bold text-white">Projects</h2>
-          <p className="mt-4 text-gray-400">
-            Here are some of my recent projects
-          </p>
-        </motion.div>
+    <section
+      id="projects"
+      className="container mx-auto px-4 py-20 min-h-screen"
+    >
+      <motion.h2
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className={`text-3xl font-bold mb-12 text-center ${
+          theme === "light" ? "text-gray-800" : "text-white"
+        }`}
+      >
+        Projects
+      </motion.h2>
 
-        <div className="space-y-32">
-          {projects.map((project, index) => (
+      <div className="grid gap-12">
+        {projects.map((project, index) => (
+          <motion.div
+            key={project.title}
+            custom={index}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={cardVariants}
+            className={`grid md:grid-cols-2 gap-8 p-8 rounded-xl backdrop-blur-sm ${
+              theme === "light"
+                ? "bg-white/70 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.16)]"
+                : "bg-gray-900/30 shadow-[0_8px_30px_rgb(0,0,0,0.3)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.4)]"
+            } transition-all duration-300`}
+          >
             <motion.div
-              key={project.title}
-              className="flex flex-col md:flex-row items-center gap-8"
-              initial={{ opacity: 0, x: -100 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
-              viewport={{ once: true }}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.3 }}
+              className="relative aspect-video overflow-hidden rounded-lg"
             >
-              <motion.div
-                className="relative aspect-video w-full md:w-1/2 rounded-lg overflow-hidden"
-                whileHover={{ scale: 1.05 }}
-              >
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-              </motion.div>
+              <Image
+                src={project.image}
+                alt={project.title}
+                fill
+                className="object-cover"
+              />
+            </motion.div>
 
-              <div className="w-full md:w-1/2 space-y-6">
+            <div className="flex flex-col justify-between">
+              <div>
                 <motion.h3
-                  className="text-4xl font-bold text-white"
                   whileHover={{ x: 10 }}
+                  className={`text-2xl font-semibold mb-4 ${
+                    theme === "light" ? "text-gray-800" : "text-white"
+                  }`}
                 >
                   {project.title}
                 </motion.h3>
-
-                <motion.p className="text-gray-400">
+                <motion.p
+                  whileHover={{ x: 10 }}
+                  className={`mb-6 ${
+                    theme === "light" ? "text-gray-600" : "text-gray-300"
+                  }`}
+                >
                   {project.description}
                 </motion.p>
-
-                <div className="flex flex-wrap gap-3">
-                  {project.techStack.frontend.map((tech) => (
-                    <span
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {project.tech.map((tech) => (
+                    <motion.span
                       key={tech}
-                      className="px-3 py-1 bg-purple-900/50 rounded-full text-sm text-purple-300"
+                      whileHover={{
+                        scale: 1.1,
+                        rotate: Math.random() * 10 - 5,
+                      }}
+                      className={`px-3 py-1 text-sm rounded-full ${
+                        theme === "light"
+                          ? "bg-purple-100 text-purple-700"
+                          : "bg-purple-900/50 text-purple-200"
+                      }`}
                     >
                       {tech}
-                    </span>
+                    </motion.span>
                   ))}
                 </div>
+              </div>
 
-                <div className="flex gap-4">
-                  <motion.button
-                    onClick={() => handleProjectClick(index)}
-                    className="px-6 py-2 bg-purple-600 rounded-full hover:bg-purple-700 transition-colors"
+              <div className="flex gap-4">
+                {project.github && (
+                  <motion.div
                     whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
+                    whileTap={{ scale: 0.95 }}
                   >
-                    View Details
-                  </motion.button>
-                  {project.github && (
-                    <motion.a
+                    <Link
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 bg-gray-800 rounded-full hover:bg-gray-700 transition-colors"
-                      whileHover={{ scale: 1.1, rotate: 360 }}
-                      whileTap={{ scale: 0.9 }}
+                      className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
+                        theme === "light"
+                          ? "bg-gray-800 text-white hover:bg-gray-700"
+                          : "bg-gray-700 text-white hover:bg-gray-600"
+                      }`}
                     >
-                      <BsGithub className="text-xl" />
-                    </motion.a>
-                  )}
-                  {project.demo && (
-                    <motion.a
+                      <FaGithub />
+                      <span>GitHub</span>
+                    </Link>
+                  </motion.div>
+                )}
+                {project.demo && (
+                  <motion.div
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Link
                       href={project.demo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 bg-gray-800 rounded-full hover:bg-gray-700 transition-colors"
-                      whileHover={{ scale: 1.1, rotate: 360 }}
-                      whileTap={{ scale: 0.9 }}
+                      className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
+                        theme === "light"
+                          ? "bg-purple-600 text-white hover:bg-purple-700"
+                          : "bg-purple-500 text-white hover:bg-purple-400"
+                      }`}
                     >
-                      <BsGlobe className="text-xl" />
-                    </motion.a>
-                  )}
-                </div>
+                      <FaExternalLinkAlt />
+                      <span>Live Demo</span>
+                    </Link>
+                  </motion.div>
+                )}
               </div>
-            </motion.div>
-          ))}
-        </div>
+            </div>
+          </motion.div>
+        ))}
       </div>
-
-      <AnimatePresence>
-        {selectedProject && (
-          <ProjectModal
-            project={selectedProject}
-            onClose={handleCloseModal}
-          />
-        )}
-      </AnimatePresence>
     </section>
   );
 };

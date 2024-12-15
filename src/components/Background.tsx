@@ -1,9 +1,11 @@
 'use client';
 
+import { useTheme } from "@/context/ThemeContext";
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const STAR_COUNT = 200;
+const CLOUD_COUNT = 8;
 
 interface Star {
   id: number;
@@ -20,12 +22,48 @@ interface ShootingStar {
   y: number;
 }
 
+interface Cloud {
+  id: number;
+  x: number;
+  y: number;
+  scale: number;
+  speed: number;
+  opacity: number;
+}
+
 export default function Background() {
   const [stars, setStars] = useState<Star[]>([]);
   const [shootingStars, setShootingStars] = useState<ShootingStar[]>([]);
+  const [clouds, setClouds] = useState<Cloud[]>([]);
+  const { theme } = useTheme();
 
+  // Initialize clouds
   useEffect(() => {
-    // Initialize stars
+    const initialClouds = Array.from({ length: CLOUD_COUNT }).map((_, index) => ({
+      id: index,
+      x: Math.random() * 100,
+      y: Math.random() * 30 + 10,
+      scale: Math.random() * 0.5 + 0.5,
+      speed: Math.random() * 0.02 + 0.01,
+      opacity: Math.random() * 0.3 + 0.7,
+    }));
+    setClouds(initialClouds);
+
+    const moveCloud = () => {
+      setClouds(prevClouds =>
+        prevClouds.map(cloud => ({
+          ...cloud,
+          x: cloud.x > 100 ? -20 : cloud.x + cloud.speed,
+        }))
+      );
+    };
+
+    const cloudInterval = setInterval(moveCloud, 50);
+    return () => clearInterval(cloudInterval);
+  }, []);
+
+  // Initialize stars
+  useEffect(() => {
     const initialStars = Array.from({ length: STAR_COUNT }).map((_, index) => ({
       id: index,
       size: Math.random() * 2 + 1,
@@ -53,6 +91,49 @@ export default function Background() {
 
     return () => clearInterval(interval);
   }, []);
+
+  if (theme === 'light') {
+    return (
+      <div className="fixed inset-0 -z-10 bg-gradient-to-b from-[#87CEEB] to-[#E0F6FF] overflow-hidden">
+        {/* Sun */}
+        <div className="absolute top-[10%] right-[20%] w-32 h-32">
+          <div className="absolute inset-0 rounded-full bg-yellow-300 blur-xl opacity-50" />
+          <div className="absolute inset-2 rounded-full bg-yellow-300 blur-md" />
+          <div className="absolute inset-4 rounded-full bg-yellow-200" />
+        </div>
+
+        {/* Clouds */}
+        {clouds.map(cloud => (
+          <motion.div
+            key={cloud.id}
+            className="absolute"
+            style={{
+              left: `${cloud.x}%`,
+              top: `${cloud.y}%`,
+              opacity: cloud.opacity,
+            }}
+            animate={{
+              x: ["0%", "100%"],
+            }}
+            transition={{
+              duration: 100 / cloud.speed,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+          >
+            <div
+              className="relative"
+              style={{ transform: `scale(${cloud.scale})` }}
+            >
+              <div className="absolute bg-white rounded-full w-16 h-16 blur-sm" />
+              <div className="absolute bg-white rounded-full w-20 h-20 blur-sm" style={{ left: '15px', top: '-10px' }} />
+              <div className="absolute bg-white rounded-full w-16 h-16 blur-sm" style={{ left: '30px', top: '0px' }} />
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <motion.div

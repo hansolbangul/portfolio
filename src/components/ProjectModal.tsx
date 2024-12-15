@@ -1,211 +1,153 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useRouter, useSearchParams } from "next/navigation";
-import { BsGithub, BsGlobe } from "react-icons/bs";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { IoClose } from "react-icons/io5";
-import { FiDownload } from "react-icons/fi";
-import type { ProjectDetail } from "@/types/project";
-import { useState } from "react";
-import { PDFTemplate } from "./PDFTemplate";
-import { pdf } from "@react-pdf/renderer";
+import { BsGithub, BsGlobe } from "react-icons/bs";
+import type { ValidatedProject } from "@/data/projects";
 
 interface ProjectModalProps {
-  project: ProjectDetail | null;
+  project: ValidatedProject;
   onClose: () => void;
 }
 
 const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
-  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, []);
 
   if (!project) return null;
 
-  const handleDownloadPDF = async () => {
-    try {
-      setIsGeneratingPDF(true);
-      const blob = await pdf(<PDFTemplate project={project} />).toBlob();
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `${project.title}_portfolio.pdf`;
-      link.click();
-      URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error("Failed to generate PDF:", error);
-    } finally {
-      setIsGeneratingPDF(false);
-    }
-  };
-
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
-      onClick={onClose}
-    >
-      <motion.div
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.9, opacity: 0 }}
-        className="relative max-h-[90vh] w-[90vw] max-w-4xl overflow-y-auto rounded-lg bg-[#0a0a0a] p-6 text-white shadow-xl"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div id="project-modal-content" className="space-y-6">
-          <div className="flex items-center justify-between">
-            <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
-              {project.title}
-            </h2>
-            <div className="flex items-center gap-4">
-              <button
-                onClick={handleDownloadPDF}
-                disabled={isGeneratingPDF}
-                className="flex items-center gap-2 rounded-full bg-purple-600 px-4 py-2 text-sm hover:bg-purple-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <FiDownload />
-                {isGeneratingPDF ? "Generating..." : "PDF"}
-              </button>
-              <button
-                onClick={onClose}
-                className="rounded-full p-2 hover:bg-white/10 transition-colors"
-              >
-                <IoClose size={24} />
-              </button>
-            </div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 backdrop-blur-sm">
+      <div className="relative h-[90vh] w-[90vw] max-w-6xl overflow-y-auto rounded-lg bg-zinc-900 p-8">
+        <button
+          onClick={onClose}
+          className="absolute right-4 top-4 text-2xl text-white hover:text-purple-500"
+        >
+          <IoClose />
+        </button>
+
+        <div className="space-y-6">
+          <div>
+            <h2 className="text-3xl font-bold text-white">{project.title}</h2>
+            <p className="mt-1 text-zinc-400">{project.period}</p>
+            <p className="text-zinc-400">
+              {project.team} - {project.role}
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <div>
-                <h3 className="text-lg font-semibold text-purple-400">
-                  Period
-                </h3>
-                <p>{project.period}</p>
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-purple-400">Team</h3>
-                <p>{project.team}</p>
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-purple-400">Role</h3>
-                <p>{project.role}</p>
-              </div>
-            </div>
-            <div className="space-y-4">
-              <div className="flex gap-4">
-                {project.github && (
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 rounded-full bg-gray-800 px-4 py-2 hover:bg-gray-700 transition-colors"
-                  >
-                    <BsGithub />
-                    GitHub
-                  </a>
-                )}
-                {project.demo && (
-                  <a
-                    href={project.demo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 rounded-full bg-gray-800 px-4 py-2 hover:bg-gray-700 transition-colors"
-                  >
-                    <BsGlobe />
-                    Demo
-                  </a>
-                )}
-              </div>
-            </div>
-          </div>
+          <p className="text-lg text-white">{project.description}</p>
 
           <div>
-            <h3 className="text-lg font-semibold text-purple-400 mb-2">
-              Description
-            </h3>
-            <p className="whitespace-pre-wrap">{project.description}</p>
-          </div>
-
-          <div>
-            <h3 className="text-lg font-semibold text-purple-400 mb-2">
+            <h3 className="mb-3 text-xl font-semibold text-purple-500">
               Tech Stack
             </h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {Object.entries(project.techStack).map(([category, techs]) => (
-                <div key={category}>
-                  <h4 className="text-sm font-medium text-gray-400 capitalize mb-1">
-                    {category}
-                  </h4>
-                  <ul className="space-y-1">
-                    {techs.map((tech) => (
-                      <li key={tech} className="text-sm">
-                        {tech}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
+            {Object.entries(project.techStack).map(
+              ([category, techs]) =>
+                techs.length > 0 && (
+                  <div key={category} className="mb-4">
+                    <h4 className="mb-2 text-white">{category}:</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {techs.map((tech) => (
+                        <span
+                          key={tech}
+                          className="rounded-full bg-purple-900 px-3 py-1 text-sm text-purple-200"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )
+            )}
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold text-purple-400 mb-2">
+            <h3 className="mb-3 text-xl font-semibold text-purple-500">
               Key Features
             </h3>
-            <ul className="list-disc list-inside space-y-1">
-              {project.features.map((feature) => (
-                <li key={feature}>{feature}</li>
+            <ul className="list-inside list-disc space-y-2 text-white">
+              {project.features.map((feature, index) => (
+                <li key={index}>{feature}</li>
               ))}
             </ul>
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold text-purple-400 mb-2">
+            <h3 className="mb-3 text-xl font-semibold text-purple-500">
               Challenges & Solutions
             </h3>
-            <div className="space-y-4">
+            <div className="space-y-6">
               {project.challenges.map((challenge, index) => (
                 <div key={index} className="space-y-2">
-                  <h4 className="font-medium text-gray-300">Problem</h4>
-                  <p>{challenge.problem}</p>
-                  <h4 className="font-medium text-gray-300">Solution</h4>
-                  <p>{challenge.solution}</p>
-                  <h4 className="font-medium text-gray-300">What I Learned</h4>
-                  <p>{challenge.learned}</p>
+                  <h4 className="text-purple-400">Problem:</h4>
+                  <p className="text-white">{challenge.problem}</p>
+                  <h4 className="text-purple-400">Solution:</h4>
+                  <p className="text-white">{challenge.solution}</p>
+                  <h4 className="text-purple-400">Learned:</h4>
+                  <p className="text-white">{challenge.learned}</p>
                 </div>
               ))}
             </div>
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold text-purple-400 mb-2">
+            <h3 className="mb-3 text-xl font-semibold text-purple-500">
               Outcome
             </h3>
             <div className="space-y-4">
               <div>
-                <h4 className="font-medium text-gray-300 mb-1">Achievements</h4>
-                <ul className="list-disc list-inside space-y-1">
-                  {project.outcome.achievements.map((achievement) => (
-                    <li key={achievement}>{achievement}</li>
+                <h4 className="mb-2 text-purple-400">Achievements:</h4>
+                <ul className="list-inside list-disc space-y-2 text-white">
+                  {project.outcome.achievements.map((achievement, index) => (
+                    <li key={index}>{achievement}</li>
                   ))}
                 </ul>
               </div>
               <div>
-                <h4 className="font-medium text-gray-300 mb-1">
-                  Future Improvements
-                </h4>
-                <ul className="list-disc list-inside space-y-1">
-                  {project.outcome.improvements.map((improvement) => (
-                    <li key={improvement}>{improvement}</li>
+                <h4 className="mb-2 text-purple-400">Future Improvements:</h4>
+                <ul className="list-inside list-disc space-y-2 text-white">
+                  {project.outcome.improvements.map((improvement, index) => (
+                    <li key={index}>{improvement}</li>
                   ))}
                 </ul>
               </div>
             </div>
           </div>
+
+          <div className="flex gap-4">
+            {project.github && (
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-white hover:text-purple-500"
+              >
+                <BsGithub />
+                GitHub
+              </a>
+            )}
+            {project.demo && (
+              <a
+                href={project.demo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-white hover:text-purple-500"
+              >
+                <BsGlobe />
+                Demo
+              </a>
+            )}
+          </div>
         </div>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 };
 

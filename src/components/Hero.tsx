@@ -2,8 +2,10 @@
 
 import { motion, useMotionValue, useTransform, useScroll } from "framer-motion";
 import { useEffect, useRef } from "react";
+import { useTheme } from "@/context/ThemeContext";
 
 export default function Hero() {
+  const { theme } = useTheme();
   const containerRef = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -30,34 +32,41 @@ export default function Hero() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  const rotateX = useTransform(mouseY, [0, 1], [10, -10]);
-  const rotateY = useTransform(mouseX, [0, 1], [-10, 10]);
+  const rotateX = useTransform(mouseY, [0, 1], [5, -5]);
+  const rotateY = useTransform(mouseX, [0, 1], [-5, 5]);
 
   return (
     <motion.section 
       ref={containerRef}
-      className="h-screen flex items-center justify-center relative overflow-hidden"
+      className="h-screen flex items-center justify-center relative"
       style={{ y, opacity }}
     >
       <motion.div
-        className="text-center z-10 perspective-1000"
+        className="text-center perspective-1000"
         style={{
           rotateX,
           rotateY,
         }}
       >
         <motion.h1 
-          className="text-6xl md:text-8xl font-bold mb-6 glow"
+          className={`text-6xl md:text-8xl font-bold mb-6 ${
+            theme === "light" ? "text-gray-800" : "text-white"
+          }`}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           안녕하세요
           <br />
-          <span className="text-primary glow">한솔지</span>입니다
+          <span className={theme === "light" ? "text-purple-600" : "text-purple-400"}>
+            한솔지
+          </span>
+          입니다
         </motion.h1>
         <motion.p 
-          className="text-xl md:text-2xl text-muted-foreground mb-8"
+          className={`text-xl md:text-2xl mb-8 ${
+            theme === "light" ? "text-gray-600" : "text-gray-300"
+          }`}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
@@ -73,7 +82,11 @@ export default function Hero() {
         >
           <motion.a
             href="#about"
-            className="px-6 py-3 bg-primary/20 backdrop-blur-sm text-primary-foreground rounded-full border border-primary/50 hover:bg-primary/30 transition-colors glow-border"
+            className={`px-6 py-3 rounded-full transition-all ${
+              theme === "light"
+                ? "bg-purple-100 text-purple-700 hover:bg-purple-200"
+                : "bg-purple-500/20 text-purple-300 hover:bg-purple-500/30"
+            }`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -81,19 +94,6 @@ export default function Hero() {
           </motion.a>
         </motion.div>
       </motion.div>
-      
-      <div className="absolute inset-0 -z-10">
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.5 }}
-          style={{
-            backgroundSize: "200% 100%",
-            animation: "gradient 15s linear infinite",
-          }}
-        />
-      </div>
     </motion.section>
   );
 }

@@ -1,125 +1,184 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
-import { HiMail } from "react-icons/hi";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { useTheme } from "@/context/ThemeContext";
+import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 
-const contactInfo = [
+const contactLinks = [
   {
-    title: "Email",
-    value: "your.email@example.com",
-    icon: <HiMail className="text-2xl" />,
-    href: "mailto:your.email@example.com",
+    name: "GitHub",
+    icon: (theme: string) => (
+      <FaGithub 
+        className={`text-3xl transition-colors ${
+          theme === "light" 
+            ? "text-gray-800 group-hover:text-gray-600" 
+            : "text-gray-300 group-hover:text-white"
+        }`} 
+      />
+    ),
+    url: "https://github.com/yourusername",
   },
   {
-    title: "GitHub",
-    value: "github.com/yourusername",
-    icon: <FaGithub className="text-2xl" />,
-    href: "https://github.com/yourusername",
+    name: "LinkedIn",
+    icon: (theme: string) => (
+      <FaLinkedin 
+        className={`text-3xl transition-colors ${
+          theme === "light" 
+            ? "text-blue-600 group-hover:text-blue-700" 
+            : "text-blue-400 group-hover:text-blue-300"
+        }`} 
+      />
+    ),
+    url: "https://linkedin.com/in/yourusername",
   },
   {
-    title: "LinkedIn",
-    value: "linkedin.com/in/yourusername",
-    icon: <FaLinkedin className="text-2xl" />,
-    href: "https://linkedin.com/in/yourusername",
+    name: "Email",
+    icon: (theme: string) => (
+      <FaEnvelope 
+        className={`text-3xl transition-colors ${
+          theme === "light" 
+            ? "text-red-600 group-hover:text-red-700" 
+            : "text-red-400 group-hover:text-red-300"
+        }`} 
+      />
+    ),
+    url: "mailto:your.email@example.com",
   },
 ];
 
-interface Particle {
-  id: number;
-  x: number;
-  y: number;
-}
+const Contact = () => {
+  const { theme } = useTheme();
 
-export default function Contact() {
-  const [particles, setParticles] = useState<Particle[]>([]);
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
 
-  useEffect(() => {
-    const initialParticles = Array.from({ length: 20 }).map((_, index) => ({
-      id: index,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-    }));
-    setParticles(initialParticles);
-  }, []);
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+      },
+    },
+  };
+
+  const floatingVariants = {
+    initial: { y: 0 },
+    float: {
+      y: [-10, 10],
+      transition: {
+        duration: 2,
+        repeat: Infinity,
+        repeatType: "reverse",
+        ease: "easeInOut",
+      },
+    },
+  };
 
   return (
-    <section id="contact" className="min-h-screen py-20 relative overflow-hidden">
-      <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="max-w-4xl mx-auto text-center"
+    <section
+      id="contact"
+      className="container mx-auto px-4 py-20 min-h-screen flex items-center justify-center"
+    >
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={containerVariants}
+        className="max-w-4xl w-full"
+      >
+        <motion.h2
+          variants={itemVariants}
+          className={`text-3xl font-bold mb-8 text-center ${
+            theme === "light" ? "text-gray-800" : "text-white"
+          }`}
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 glow">Contact</h2>
-          <p className="text-xl text-muted-foreground mb-12">
-            함께 일하고 싶으시다면 연락해주세요
-          </p>
+          Contact Me
+        </motion.h2>
 
-          <div className="grid gap-8 md:grid-cols-2">
-            {contactInfo.map((info, index) => (
-              <motion.a
-                key={info.title}
-                href={info.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group p-6 bg-secondary/10 backdrop-blur-sm rounded-lg border border-secondary/30 hover:border-primary/50 transition-colors"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.02 }}
+        <motion.p
+          variants={itemVariants}
+          className={`text-center mb-12 max-w-2xl mx-auto ${
+            theme === "light" ? "text-gray-600" : "text-gray-300"
+          }`}
+        >
+          I'm always open to new opportunities and collaborations.
+          Feel free to reach out through any of the following channels!
+        </motion.p>
+
+        <motion.div
+          variants={itemVariants}
+          className="grid md:grid-cols-3 gap-6"
+        >
+          {contactLinks.map((link) => (
+            <motion.a
+              key={link.name}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              initial="initial"
+              whileHover={{
+                scale: 1.05,
+                transition: { duration: 0.2 },
+              }}
+              whileTap={{ scale: 0.95 }}
+              animate="float"
+              variants={floatingVariants}
+              className={`group flex flex-col items-center gap-4 p-6 rounded-xl backdrop-blur-sm ${
+                theme === "light"
+                  ? "bg-white/70 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.16)]"
+                  : "bg-gray-900/30 shadow-[0_8px_30px_rgb(0,0,0,0.3)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.4)]"
+              } transition-all duration-300`}
+            >
+              {link.icon(theme)}
+              <span
+                className={`font-medium ${
+                  theme === "light" ? "text-gray-800" : "text-white"
+                }`}
               >
-                <div className="flex items-center gap-4">
-                  <motion.div
-                    className="text-primary"
-                    animate={{ rotate: [0, 360] }}
-                    transition={{
-                      duration: 20,
-                      repeat: Infinity,
-                      ease: "linear",
-                    }}
-                  >
-                    {info.icon}
-                  </motion.div>
-                  <div className="text-left">
-                    <h3 className="font-semibold mb-1">{info.title}</h3>
-                    <p className="text-sm text-muted-foreground">{info.value}</p>
-                  </div>
-                </div>
-              </motion.a>
-            ))}
-          </div>
+                {link.name}
+              </span>
+            </motion.a>
+          ))}
         </motion.div>
-      </div>
 
-      {/* Background particles */}
-      <div className="absolute inset-0 -z-10">
-        {particles.map((particle) => (
-          <motion.div
-            key={particle.id}
-            className="absolute w-1 h-1 bg-primary/20 rounded-full"
-            style={{
-              left: `${particle.x}%`,
-              top: `${particle.y}%`,
-            }}
-            animate={{
-              y: [0, -50, 0],
-              opacity: [0.2, 0.5, 0.2],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: 5,
-              repeat: Infinity,
-              ease: "linear",
-              delay: particle.id * 0.2,
-            }}
-          />
-        ))}
-      </div>
+        <motion.div
+          variants={itemVariants}
+          className={`mt-16 p-8 rounded-xl text-center ${
+            theme === "light"
+              ? "bg-purple-100"
+              : "bg-purple-900/30"
+          }`}
+        >
+          <motion.h3
+            whileHover={{ scale: 1.05 }}
+            className={`text-xl font-semibold mb-4 ${
+              theme === "light" ? "text-purple-800" : "text-purple-200"
+            }`}
+          >
+            Let's Create Something Amazing Together!
+          </motion.h3>
+          <motion.p
+            whileHover={{ y: -5 }}
+            className={`${
+              theme === "light" ? "text-purple-700" : "text-purple-300"
+            }`}
+          >
+            Whether you have a project in mind or just want to chat,
+            I'm here to help turn ideas into reality.
+          </motion.p>
+        </motion.div>
+      </motion.div>
     </section>
   );
-}
+};
+
+export default Contact;
