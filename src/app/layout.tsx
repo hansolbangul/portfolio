@@ -2,11 +2,10 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { ThemeProvider } from "@/context/ThemeContext";
 import "./globals.css";
-import MouseFollower from "@/components/MouseFollower";
-import ScrollProgress from "@/components/ScrollProgress";
-import Background from "@/components/Background";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import MouseFollower from "@/shared/components/animations/MouseFollower";
+import Background from "@/shared/components/animations/Background";
+import Header from "@/shared/components/layout/Header";
+import Footer from "@/shared/components/layout/Footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -31,16 +30,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className="scroll-smooth">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
+      >
         <ThemeProvider>
           <div className="relative min-h-screen overflow-hidden">
             <Background />
             <MouseFollower />
             <div className="flex flex-col min-h-screen">
               <Header />
-              <main className="flex-grow">
-                {children}
-              </main>
+              <main className="flex-grow">{children}</main>
               <Footer />
             </div>
           </div>

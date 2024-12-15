@@ -3,7 +3,7 @@
 import { useTheme } from "@/context/ThemeContext";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Balloon from "@/components/background/Balloon";
+import Balloon from "./background/Balloon";
 
 const STAR_COUNT = 200;
 const CLOUD_COUNT = 8;
