@@ -32,8 +32,8 @@ export default function Hero() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  const rotateX = useTransform(mouseY, [0, 1], [5, -5]);
-  const rotateY = useTransform(mouseX, [0, 1], [-5, 5]);
+  const rotateX = useTransform(mouseY, [0, 1], [15, -15]);
+  const rotateY = useTransform(mouseX, [0, 1], [-15, 15]);
 
   return (
     <motion.section 

@@ -1,10 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { useTheme } from "@/context/ThemeContext";
 import Image from "next/image";
 import Link from "next/link";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
+import ProjectModal from "./ProjectModal";
+import { projects } from "@/data/projects";
+import type { ValidatedProject } from "@/data/projects";
 
 interface Project {
   title: string;
@@ -15,21 +19,9 @@ interface Project {
   demo?: string;
 }
 
-const projects: Project[] = [
-  {
-    title: "Portfolio Website",
-    description:
-      "A modern, responsive portfolio website built with Next.js and TailwindCSS. Features dark/light mode and smooth animations.",
-    image: "/projects/portfolio.png",
-    tech: ["Next.js", "TypeScript", "TailwindCSS", "Framer Motion"],
-    github: "https://github.com/yourusername/portfolio",
-    demo: "https://your-portfolio-url.com",
-  },
-  // Add more projects here
-];
-
 const Projects = () => {
   const { theme } = useTheme();
+  const [selectedProject, setSelectedProject] = useState<ValidatedProject | null>(null);
 
   const cardVariants = {
     hidden: { opacity: 0, y: 50 },
@@ -61,16 +53,17 @@ const Projects = () => {
         Projects
       </motion.h2>
 
-      <div className="grid gap-12">
-        {projects.map((project, index) => (
+      <div className="space-y-16">
+        {projects.map((project, i) => (
           <motion.div
             key={project.title}
-            custom={index}
+            variants={cardVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            variants={cardVariants}
-            className={`grid md:grid-cols-2 gap-8 p-8 rounded-xl backdrop-blur-sm ${
+            custom={i}
+            onClick={() => setSelectedProject(project)}
+            className={`grid md:grid-cols-2 gap-8 p-8 rounded-xl cursor-pointer backdrop-blur-sm ${
               theme === "light"
                 ? "bg-white/70 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.16)]"
                 : "bg-gray-900/30 shadow-[0_8px_30px_rgb(0,0,0,0.3)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.4)]"
@@ -82,7 +75,7 @@ const Projects = () => {
               className="relative aspect-video overflow-hidden rounded-lg"
             >
               <Image
-                src={project.image}
+                src={project.thumbnail || "/projects/default-thumbnail.jpg"}
                 alt={project.title}
                 fill
                 className="object-cover"
@@ -108,7 +101,7 @@ const Projects = () => {
                   {project.description}
                 </motion.p>
                 <div className="flex flex-wrap gap-2 mb-6">
-                  {project.tech.map((tech) => (
+                  {project.techStack.Frontend?.map((tech) => (
                     <motion.span
                       key={tech}
                       whileHover={{
@@ -137,6 +130,7 @@ const Projects = () => {
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
                       className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
                         theme === "light"
                           ? "bg-gray-800 text-white hover:bg-gray-700"
@@ -157,6 +151,7 @@ const Projects = () => {
                       href={project.demo}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
                       className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
                         theme === "light"
                           ? "bg-purple-600 text-white hover:bg-purple-700"
@@ -173,6 +168,13 @@ const Projects = () => {
           </motion.div>
         ))}
       </div>
+
+      {selectedProject && (
+        <ProjectModal
+          project={selectedProject}
+          onClose={() => setSelectedProject(null)}
+        />
+      )}
     </section>
   );
 };

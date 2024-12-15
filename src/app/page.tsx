@@ -1,9 +1,10 @@
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Projects from "@/components/Projects";
-import ScrollProgress from "@/components/ScrollProgress";
 import Contact from "@/components/Contact";
 import Background from "@/components/Background";
+import FloatingGameButton from "@/components/FloatingGameButton";
+import ScrollProgress from "@/components/ScrollProgress";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
         <Projects />
         <Contact />
       </div>
+      <FloatingGameButton />
     </main>
   );
 }

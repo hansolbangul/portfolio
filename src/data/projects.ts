@@ -44,6 +44,7 @@ export const projects = [
       ]
     },
     github: "https://github.com/hansolbangul/portfolio",
+    demo: "https://hansolbangul.vercel.app/",
     thumbnail: "/images/portfolio-thumbnail.png"
   }
 ] as const;

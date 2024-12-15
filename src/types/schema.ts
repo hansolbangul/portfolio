@@ -40,6 +40,7 @@ export const projectSchema = projectDetailSchema.pick({
   description: true,
   techStack: true,
   thumbnail: true,
+  demo: true,
 });
 
 // Portfolio data schema
