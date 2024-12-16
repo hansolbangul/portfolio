@@ -1,28 +1,13 @@
 "use client";
 
 import { useTheme } from "@/context/ThemeContext";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Balloon from "./background/Balloon";
 
-const STAR_COUNT = 200;
+const STAR_COUNT = 100; // 별 개수 줄임
 const CLOUD_COUNT = 8;
 const BALLOON_COUNT = 3;
-
-interface Star {
-  id: number;
-  size: number;
-  x: number;
-  y: number;
-  duration: number;
-}
-
-interface ShootingStar {
-  id: number;
-  width: number;
-  x: number;
-  y: number;
-}
 
 interface Cloud {
   id: number;
@@ -42,25 +27,141 @@ interface Balloon {
   color: string;
 }
 
+const StarField = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    // Canvas 크기 설정
+    const setCanvasSize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    setCanvasSize();
+    window.addEventListener('resize', setCanvasSize);
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // 별들의 초기 위치와 속성 설정
+    const stars = Array.from({ length: STAR_COUNT }).map(() => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      size: Math.random() * 1.5 + 0.5, // 별 크기 조정
+      opacity: Math.random() * 0.3 + 0.2, // 별 밝기 조정
+      speed: Math.random() * 0.001 + 0.0005 // 깜박임 속도 조정
+    }));
+
+    // 유성 배열
+    let shootingStars: Array<{
+      startX: number;
+      startY: number;
+      x: number;
+      y: number;
+      length: number;
+      speed: number;
+      opacity: number;
+    }> = [];
+
+    // 새로운 유성 생성
+    const createShootingStar = () => {
+      if (shootingStars.length < 2) { // 최대 2개로 제한
+        const startX = Math.random() * (canvas.width * 0.8); // 화면 왼쪽 80% 영역에서 시작
+        const startY = Math.random() * (canvas.height * 0.3); // 상단 30% 영역에서 시작
+        shootingStars.push({
+          startX,
+          startY,
+          x: startX,
+          y: startY,
+          length: Math.random() * 100 + 50,
+          speed: Math.random() * 4 + 3,
+          opacity: 1
+        });
+      }
+    };
+
+    // 주기적으로 유성 생성 (간격 늘림)
+    setInterval(createShootingStar, 4000);
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // 별 그리기
+      stars.forEach(star => {
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // 부드러운 깜박임 효과
+        star.opacity = 0.2 + Math.sin(Date.now() * star.speed) * 0.1;
+      });
+
+      // 유성 그리기 및 업데이트
+      shootingStars = shootingStars.filter(star => {
+        // 유성 이동 (대각선으로)
+        star.x += star.speed;
+        star.y += star.speed * 0.7; // y축 이동 속도를 약간 줄여서 더 자연스러운 각도로
+
+        // 유성 그리기
+        ctx.beginPath();
+        const gradient = ctx.createLinearGradient(
+          star.x, star.y,
+          star.x - star.length, star.y - star.length * 0.7
+        );
+        gradient.addColorStop(0, `rgba(255, 255, 255, ${star.opacity})`);
+        gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        
+        ctx.strokeStyle = gradient;
+        ctx.lineWidth = 2;
+        ctx.moveTo(star.x, star.y);
+        ctx.lineTo(star.x - star.length, star.y - star.length * 0.7);
+        ctx.stroke();
+
+        // 흔적 효과
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(255, 255, 255, ${star.opacity * 0.3})`;
+        ctx.lineWidth = 1;
+        ctx.moveTo(star.x + 1, star.y + 1);
+        ctx.lineTo(star.x - star.length * 0.3, star.y - (star.length * 0.3 * 0.7));
+        ctx.stroke();
+
+        star.opacity -= 0.02;
+
+        // 화면을 벗어나거나 투명해지면 제거
+        return star.opacity > 0 && star.x < canvas.width + star.length && star.y < canvas.height + star.length;
+      });
+
+      requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    return () => {
+      window.removeEventListener('resize', setCanvasSize);
+    };
+  }, []);
+
+  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />;
+};
+
 export default function Background() {
-  const [stars, setStars] = useState<Star[]>([]);
-  const [shootingStars, setShootingStars] = useState<ShootingStar[]>([]);
   const [clouds, setClouds] = useState<Cloud[]>([]);
   const [balloons, setBalloons] = useState<Balloon[]>([]);
   const { theme } = useTheme();
 
   // Initialize clouds
   useEffect(() => {
-    const initialClouds = Array.from({ length: CLOUD_COUNT }).map(
-      (_, index) => ({
-        id: index,
-        x: Math.random() * 100,
-        y: Math.random() * 30 + 10,
-        scale: Math.random() * 0.5 + 0.5,
-        speed: Math.random() * 0.02 + 0.01,
-        opacity: Math.random() * 0.3 + 0.7,
-      })
-    );
+    const initialClouds = Array.from({ length: CLOUD_COUNT }).map((_, index) => ({
+      id: index,
+      x: Math.random() * 100,
+      y: Math.random() * 30 + 10,
+      scale: Math.random() * 0.5 + 0.5,
+      speed: Math.random() * 0.02 + 0.01,
+      opacity: Math.random() * 0.3 + 0.7,
+    }));
     setClouds(initialClouds);
 
     const moveCloud = () => {
@@ -76,52 +177,18 @@ export default function Background() {
     return () => clearInterval(cloudInterval);
   }, []);
 
-  // Initialize stars
-  useEffect(() => {
-    const initialStars = Array.from({ length: STAR_COUNT }).map((_, index) => ({
-      id: index,
-      size: Math.random() * 2 + 1,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      duration: Math.random() * 3 + 2,
-    }));
-    setStars(initialStars);
-
-    // Shooting stars interval
-    let nextId = 0;
-    const interval = setInterval(() => {
-      const newShootingStar = {
-        id: nextId++,
-        width: Math.random() * 100 + 50,
-        x: Math.random() * 100,
-        y: Math.random() * 50,
-      };
-
-      setShootingStars((prev) => [...prev, newShootingStar]);
-      setTimeout(() => {
-        setShootingStars((prev) =>
-          prev.filter((star) => star.id !== newShootingStar.id)
-        );
-      }, 1000);
-    }, 2000);
-
-    return () => clearInterval(interval);
-  }, []);
-
   // Initialize balloons
   useEffect(() => {
     if (theme === "light") {
       const colors = ["#FFB5B5", "#B5FFB5", "#B5B5FF", "#FFFFB5", "#FFB5FF"];
-      const initialBalloons = Array.from({ length: BALLOON_COUNT }).map(
-        (_, index) => ({
-          id: index,
-          x: -(Math.random() * 15 + 15), // 화면 가까이서 시작
-          y: Math.random() * 60 + 5, // 더 넓은 범위에 분포
-          scale: Math.random() * 0.2 + 0.2, // 0.2 ~ 0.4 사이의 더 작은 크기
-          delay: Math.random() * 3, // 시작 시간 간격 줄임
-          color: colors[index % colors.length],
-        })
-      );
+      const initialBalloons = Array.from({ length: BALLOON_COUNT }).map((_, index) => ({
+        id: index,
+        x: -(Math.random() * 15 + 15),
+        y: Math.random() * 60 + 5,
+        scale: Math.random() * 0.2 + 0.2,
+        delay: Math.random() * 3,
+        color: colors[index % colors.length],
+      }));
       setBalloons(initialBalloons);
     }
   }, [theme]);
@@ -169,11 +236,7 @@ export default function Background() {
 
           {/* Balloons */}
           <div className="absolute inset-0 z-20">
-            <svg
-              className="w-full h-full"
-              viewBox="0 0 100 100"
-              preserveAspectRatio="none"
-            >
+            <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
               {balloons &&
                 balloons.map((balloon) => (
                   <Balloon
@@ -190,44 +253,7 @@ export default function Background() {
         </div>
       ) : (
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a2c] via-[#1a1a4a] to-[#2a2a6a]">
-          {/* Stars */}
-          {stars.map((star) => (
-            <motion.div
-              key={star.id}
-              className="absolute rounded-full bg-white"
-              style={{
-                width: `${star.size}px`,
-                height: `${star.size}px`,
-                left: `${star.x}%`,
-                top: `${star.y}%`,
-              }}
-              animate={{
-                opacity: [0.3, 0.8, 0.3],
-                scale: [1, 1.2, 1],
-              }}
-              transition={{
-                duration: star.duration,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-          ))}
-
-          {/* Shooting stars */}
-          {shootingStars.map((star) => (
-            <motion.div
-              key={star.id}
-              className="absolute h-px bg-white"
-              style={{
-                width: `${star.width}px`,
-                left: `${star.x}%`,
-                top: `${star.y}%`,
-              }}
-              initial={{ opacity: 0, rotate: 45, scale: 0 }}
-              animate={{ opacity: [0, 1, 0], scale: [0, 1, 0], x: 100, y: 100 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-            />
-          ))}
+          <StarField />
         </div>
       )}
     </div>
