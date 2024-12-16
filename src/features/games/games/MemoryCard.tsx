@@ -136,14 +136,39 @@ const MemoryCard = () => {
               }
               variants={cardVariants}
             >
+              {/* 앞면 (물음표) */}
               <div
-                className={`absolute w-full h-full flex items-center justify-center rounded-lg text-3xl ${
-                  theme === 'light'
-                    ? 'bg-purple-100'
-                    : 'bg-purple-900/30'
-                } backface-hidden`}
+                className={`absolute w-full h-full rounded-xl ${
+                  theme === "light"
+                    ? "bg-gradient-to-br from-violet-400 via-indigo-400 to-blue-500"
+                    : "bg-gradient-to-br from-violet-600 via-indigo-700 to-blue-800"
+                } backface-hidden shadow-lg hover:shadow-xl transition-shadow duration-300`}
+                style={{ transform: "rotateY(0deg)" }}
               >
-                ?
+                <div className="w-full h-full rounded-xl flex items-center justify-center relative overflow-hidden">
+                  {/* 배경 패턴 */}
+                  <div className="absolute inset-0">
+                    {/* 상단 왼쪽 원형 */}
+                    <div className="absolute -top-4 -left-4 w-24 h-24 bg-white/10 rounded-full blur-xl" />
+                    {/* 하단 오른쪽 원형 */}
+                    <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-white/10 rounded-full blur-xl" />
+                    {/* 중앙 장식 패턴 */}
+                    <div className="absolute inset-2 border-2 border-white/20 rounded-lg" />
+                    <div className="absolute inset-4 border-2 border-white/10 rounded-lg rotate-3" />
+                    <div className="absolute inset-4 border-2 border-white/10 rounded-lg -rotate-3" />
+                  </div>
+                  
+                  {/* 중앙 물음표 */}
+                  <div className="relative transform transition-transform">
+                    <div className="relative z-10 bg-white/20 backdrop-blur-sm rounded-2xl p-4 shadow-inner">
+                      <div className="text-white text-5xl font-bold style-question-mark">
+                        ?
+                      </div>
+                    </div>
+                    {/* 물음표 뒤 글로우 효과 */}
+                    <div className="absolute inset-0 bg-white/20 rounded-2xl blur-md -z-10 scale-110" />
+                  </div>
+                </div>
               </div>
               <div
                 className={`absolute w-full h-full flex items-center justify-center rounded-lg text-3xl ${

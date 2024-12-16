@@ -114,7 +114,7 @@ const FloatingGameButton = () => {
 
         {isOpen && selectedGame && (
           <motion.div
-            className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-40 p-4"
+            className="z-50 fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-40 p-4"
             variants={gameVariants}
             initial="initial"
             animate="animate"
