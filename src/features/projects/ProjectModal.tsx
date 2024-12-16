@@ -9,9 +9,10 @@ import type { ValidatedProject } from "@/data/projects";
 interface ProjectModalProps {
   project: ValidatedProject;
   onClose: () => void;
+  theme: "light" | "dark";
 }
 
-const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
+const ProjectModal = ({ project, onClose, theme }: ProjectModalProps) => {
   const router = useRouter();
 
   useEffect(() => {
@@ -25,24 +26,48 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 backdrop-blur-sm">
-      <div className="relative h-[90vh] w-[90vw] max-w-6xl overflow-y-auto rounded-lg bg-zinc-900 p-8">
+      <div
+        className={`relative h-[90vh] w-[90vw] max-w-6xl overflow-y-auto rounded-lg p-8 ${
+          theme === "light" ? "bg-white" : "bg-zinc-900"
+        }`}
+      >
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 text-2xl text-white hover:text-purple-500"
+          className={`absolute right-4 top-4 text-2xl hover:text-purple-500 ${
+            theme === "light" ? "text-gray-800" : "text-white"
+          }`}
         >
           <IoClose />
         </button>
 
         <div className="space-y-6">
           <div>
-            <h2 className="text-3xl font-bold text-white">{project.title}</h2>
-            <p className="mt-1 text-zinc-400">{project.period}</p>
-            <p className="text-zinc-400">
+            <h2
+              className={`text-3xl font-bold ${
+                theme === "light" ? "text-gray-800" : "text-white"
+              }`}
+            >
+              {project.title}
+            </h2>
+            <p
+              className={theme === "light" ? "text-gray-600" : "text-zinc-400"}
+            >
+              {project.period}
+            </p>
+            <p
+              className={theme === "light" ? "text-gray-600" : "text-zinc-400"}
+            >
               {project.team} - {project.role}
             </p>
           </div>
 
-          <p className="text-lg text-white">{project.description}</p>
+          <p
+            className={`text-lg ${
+              theme === "light" ? "text-gray-800" : "text-white"
+            }`}
+          >
+            {project.description}
+          </p>
 
           <div>
             <h3 className="mb-3 text-xl font-semibold text-purple-500">
@@ -52,12 +77,22 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
               ([category, techs]) =>
                 techs.length > 0 && (
                   <div key={category} className="mb-4">
-                    <h4 className="mb-2 text-white">{category}:</h4>
+                    <h4
+                      className={
+                        theme === "light" ? "text-gray-800" : "text-white"
+                      }
+                    >
+                      {category}:
+                    </h4>
                     <div className="flex flex-wrap gap-2">
                       {techs.map((tech) => (
                         <span
                           key={tech}
-                          className="rounded-full bg-purple-900 px-3 py-1 text-sm text-purple-200"
+                          className={`rounded-full px-3 py-1 text-sm ${
+                            theme === "light"
+                              ? "bg-purple-100 text-purple-600"
+                              : "bg-purple-900 text-purple-200"
+                          }`}
                         >
                           {tech}
                         </span>
@@ -72,9 +107,14 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
             <h3 className="mb-3 text-xl font-semibold text-purple-500">
               Key Features
             </h3>
-            <ul className="list-inside list-disc space-y-2 text-white">
+            <ul className="list-inside list-disc space-y-2">
               {project.features.map((feature, index) => (
-                <li key={index}>{feature}</li>
+                <li
+                  key={index}
+                  className={theme === "light" ? "text-gray-800" : "text-white"}
+                >
+                  {feature}
+                </li>
               ))}
             </ul>
           </div>
@@ -87,11 +127,29 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
               {project.challenges.map((challenge, index) => (
                 <div key={index} className="space-y-2">
                   <h4 className="text-purple-400">Problem:</h4>
-                  <p className="text-white">{challenge.problem}</p>
+                  <p
+                    className={
+                      theme === "light" ? "text-gray-800" : "text-white"
+                    }
+                  >
+                    {challenge.problem}
+                  </p>
                   <h4 className="text-purple-400">Solution:</h4>
-                  <p className="text-white">{challenge.solution}</p>
+                  <p
+                    className={
+                      theme === "light" ? "text-gray-800" : "text-white"
+                    }
+                  >
+                    {challenge.solution}
+                  </p>
                   <h4 className="text-purple-400">Learned:</h4>
-                  <p className="text-white">{challenge.learned}</p>
+                  <p
+                    className={
+                      theme === "light" ? "text-gray-800" : "text-white"
+                    }
+                  >
+                    {challenge.learned}
+                  </p>
                 </div>
               ))}
             </div>
@@ -104,17 +162,31 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
             <div className="space-y-4">
               <div>
                 <h4 className="mb-2 text-purple-400">Achievements:</h4>
-                <ul className="list-inside list-disc space-y-2 text-white">
+                <ul className="list-inside list-disc space-y-2">
                   {project.outcome.achievements.map((achievement, index) => (
-                    <li key={index}>{achievement}</li>
+                    <li
+                      key={index}
+                      className={
+                        theme === "light" ? "text-gray-800" : "text-white"
+                      }
+                    >
+                      {achievement}
+                    </li>
                   ))}
                 </ul>
               </div>
               <div>
                 <h4 className="mb-2 text-purple-400">Future Improvements:</h4>
-                <ul className="list-inside list-disc space-y-2 text-white">
+                <ul className="list-inside list-disc space-y-2">
                   {project.outcome.improvements.map((improvement, index) => (
-                    <li key={index}>{improvement}</li>
+                    <li
+                      key={index}
+                      className={
+                        theme === "light" ? "text-gray-800" : "text-white"
+                      }
+                    >
+                      {improvement}
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -127,7 +199,9 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-white hover:text-purple-500"
+                className={`flex items-center gap-2 ${
+                  theme === "light" ? "text-gray-800" : "text-white"
+                } hover:text-purple-500`}
               >
                 <BsGithub />
                 GitHub
@@ -138,7 +212,9 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                 href={project.demo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-white hover:text-purple-500"
+                className={`flex items-center gap-2 ${
+                  theme === "light" ? "text-gray-800" : "text-white"
+                } hover:text-purple-500`}
               >
                 <BsGlobe />
                 Demo

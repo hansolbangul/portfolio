@@ -8,9 +8,9 @@ export const projects = [
     period: "2023.12 - Present",
     team: "Personal Project",
     role: "Full Stack Developer",
-    techStack: {
-      Frontend: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
-      Tools: ["Git", "GitHub"],
+    techStack: { 
+      Frontend: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"], 
+      Tools: ["Git", "GitHub"] 
     },
     features: [
       "Interactive space-themed background with parallax effect",
@@ -47,7 +47,7 @@ export const projects = [
     demo: "https://hansolbangul.vercel.app/",
     thumbnail: "/images/portfolio-thumbnail.png"
   }
-] as const;
+];
 
 // Validate projects data against schema
 export const validatedProjects = projects.map(project => {
