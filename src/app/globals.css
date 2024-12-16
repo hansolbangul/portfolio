@@ -40,7 +40,11 @@ body {
   background: var(--background);
   transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
   @apply bg-background text-foreground;
-  background: radial-gradient(circle at center, rgb(15, 15, 25) 0%, rgb(5, 5, 15) 100%);
+  background: radial-gradient(
+    circle at center,
+    rgb(15, 15, 25) 0%,
+    rgb(5, 5, 15) 100%
+  );
 }
 
 /* 기존 스타일 유지 */
@@ -48,10 +52,10 @@ body {
 @layer base {
   * {
     @apply border-neutral-800;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
-  
+
   /* Hide scrollbar for Chrome, Safari and Opera */
   ::-webkit-scrollbar {
     display: none;
@@ -71,7 +75,8 @@ body {
 }
 
 @keyframes twinkle {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.2;
     transform: scale(0.8);
   }
@@ -82,7 +87,8 @@ body {
 }
 
 @keyframes nebula-move {
-  0%, 100% {
+  0%,
+  100% {
     transform: translate(0, 0) scale(1);
   }
   50% {
@@ -91,7 +97,8 @@ body {
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
@@ -100,7 +107,8 @@ body {
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
     transform: scale(1);
   }
@@ -177,12 +185,10 @@ body {
 /* Glow Effects */
 .glow {
   text-shadow: 0 0 10px hsl(var(--primary) / 0.5),
-               0 0 20px hsl(var(--primary) / 0.3),
-               0 0 30px hsl(var(--primary) / 0.2);
+    0 0 20px hsl(var(--primary) / 0.3), 0 0 30px hsl(var(--primary) / 0.2);
 }
 
 .glow-border {
   box-shadow: 0 0 10px hsl(var(--primary) / 0.5),
-              0 0 20px hsl(var(--primary) / 0.3),
-              0 0 30px hsl(var(--primary) / 0.2);
+    0 0 20px hsl(var(--primary) / 0.3), 0 0 30px hsl(var(--primary) / 0.2);
 }
