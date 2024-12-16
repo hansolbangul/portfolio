@@ -40,7 +40,7 @@ const Header = () => {
               <BsGithub />
             </motion.a>
             <motion.a
-              href="https://www.linkedin.com/in/hansol-ji-b33a16296/"
+              href="https://www.linkedin.com/in/hansolbangul/"
               target="_blank"
               rel="noopener noreferrer"
               className={`text-2xl hover:text-purple-500 transition-colors ${

@@ -66,13 +66,13 @@ const ProjectModal = ({ project, onClose, theme }: ProjectModalProps) => {
               </p>
             </div>
 
-            {/* 이미지 슬라이더 */}
+            {/* 이미지 갤러리 */}
             {project.images && project.images.length > 0 && (
-              <div className="relative -mx-4 h-[300px] md:h-[400px]">
+              <div className="relative w-full h-[400px] my-8">
                 <Swiper
                   effect="coverflow"
-                  grabCursor
-                  centeredSlides
+                  grabCursor={true}
+                  centeredSlides={true}
                   slidesPerView="auto"
                   coverflowEffect={{
                     rotate: 50,
@@ -82,21 +82,19 @@ const ProjectModal = ({ project, onClose, theme }: ProjectModalProps) => {
                     slideShadows: true,
                   }}
                   pagination={{ clickable: true }}
-                  navigation
+                  navigation={true}
                   modules={[EffectCoverflow, Pagination, Navigation]}
-                  className="h-full w-full"
+                  className="w-full h-full"
                 >
                   {project.images.map((image, index) => (
-                    <SwiperSlide
-                      key={index}
-                      className="!w-[70%] md:!w-[60%] overflow-hidden rounded-lg"
-                    >
-                      <div className="relative h-full w-full">
+                    <SwiperSlide key={index} className="w-[600px]">
+                      <div className="relative w-full h-full">
                         <Image
                           src={image}
                           alt={`${project.title} screenshot ${index + 1}`}
                           fill
                           className="object-contain"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
                       </div>
                     </SwiperSlide>

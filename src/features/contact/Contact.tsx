@@ -17,7 +17,7 @@ const contactLinks = [
         }`} 
       />
     ),
-    url: "https://github.com/yourusername",
+    url: "https://github.com/hansolbangul",
   },
   {
     name: "LinkedIn",
@@ -30,7 +30,7 @@ const contactLinks = [
         }`} 
       />
     ),
-    url: "https://linkedin.com/in/yourusername",
+    url: "https://www.linkedin.com/in/hansolbangul/",
   },
   {
     name: "Email",
@@ -43,7 +43,7 @@ const contactLinks = [
         }`} 
       />
     ),
-    url: "mailto:your.email@example.com",
+    url: "mailto:ruaenddl981028@naver.com",
   },
 ];
 

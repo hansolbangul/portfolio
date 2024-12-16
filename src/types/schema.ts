@@ -31,6 +31,7 @@ export const projectDetailSchema = z.object({
   github: z.string().url().optional(),
   demo: z.string().url().optional(),
   thumbnail: z.string(),
+  images: z.array(z.string()).optional(),
 });
 
 // Project schema (simplified version for list)
@@ -41,6 +42,7 @@ export const projectSchema = projectDetailSchema.pick({
   techStack: true,
   thumbnail: true,
   demo: true,
+  images: true,
 });
 
 // Portfolio data schema
