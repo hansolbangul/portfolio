@@ -88,7 +88,9 @@ export default function About() {
               whileInView={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
-              className="text-lg text-gray-600 dark:text-gray-300"
+              className={`text-lg ${
+                theme === "light" ? "text-gray-800" : "text-gray-300"
+              }`}
             >
               혁신적인 개발자 경험을 만들어가는 소프트웨어 엔지니어입니다.
             </motion.p>
@@ -126,7 +128,7 @@ export default function About() {
               >
                 <p
                   className={`text-lg leading-relaxed ${
-                    theme === "light" ? "text-gray-600" : "text-gray-300"
+                    theme === "light" ? "text-gray-800" : "text-gray-300"
                   }`}
                 >
                   {intro.content}
