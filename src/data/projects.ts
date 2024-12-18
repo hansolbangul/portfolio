@@ -85,9 +85,9 @@ export const projects = [
     demo: "https://blog.hansolbangul.com/post/library-generate-router-1",
     thumbnail: "/videos/pip-test.mp4",
     images: [
-      "/images/generate-router-1.png",
-      "/images/generate-router-2.png",
-      "/images/generate-router-3.png",
+      "/images/profile.jpeg",
+      "/images/profile.jpeg",
+      "/images/profile.jpeg",
     ],
   },
   {

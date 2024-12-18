@@ -192,3 +192,34 @@ body {
   box-shadow: 0 0 10px hsl(var(--primary) / 0.5),
     0 0 20px hsl(var(--primary) / 0.3), 0 0 30px hsl(var(--primary) / 0.2);
 }
+
+/* Swiper Custom Styles */
+.swiper {
+  padding-bottom: 3rem !important;
+}
+
+.swiper-pagination {
+  bottom: 0 !important;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: currentColor !important;
+}
+
+.swiper-pagination-bullet {
+  background: currentColor !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: currentColor !important;
+}
+
+.swiper-slide {
+  transition: all 0.3s ease;
+  opacity: 0.4;
+}
+
+.swiper-slide-active {
+  opacity: 1;
+}
