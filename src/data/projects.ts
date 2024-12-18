@@ -3,10 +3,10 @@ import { projectDetailSchema, type ProjectDetail } from "@/types/schema";
 export const projects = [
   {
     id: 1,
-    title: "generate-router 라이브러리",
+    title: "generate-router",
     description:
-      "Next.js의 라우팅 시스템을 위한 타입 안전한 라우터 생성 유틸리티 개발",
-    period: "2024.12 - 현재",
+      "Next.js의 라우팅 시스템을 위한 타입 안전한 라우터 생성 CLI 라이브러리입니다. 'generate-router' 명령어 한 번으로 파일 시스템 기반의 라우팅을 TypeScript 타입으로 자동 생성하여 개발자 경험을 향상시킵니다.",
+    period: "2023.12 - 현재",
     team: "개인 프로젝트",
     role: "개발자",
     techStack: {
@@ -27,47 +27,54 @@ export const projects = [
       모니터링: [],
     },
     features: [
+      "CLI 명령어를 통한 간편한 라우터 타입 생성 ('generate-router' 명령어 제공)",
       "TypeScript의 타입 시스템을 활용하여 컴파일 타임에 잘못된 라우트 사용을 방지",
-      "CLI 도구를 통해 pages 디렉토리와 app 디렉토리 구조 모두 지원",
+      "pages 디렉토리와 app 디렉토리 구조 모두 지원 (--dir 옵션으로 선택)",
       "override 기능을 통해 Next.js의 useRouter와 Link 컴포넌트의 타입을 자동으로 추론",
-      "동적 라우트([id], [...slug] 등)에 대한 타입 안전성 보장",
       "자동화된 타입 생성으로 개발자의 수동 타입 정의 작업 최소화",
+      "동적 라우트([id], [...slug] 등)에 대한 타입 안전성 보장",
+      "타입 안전한 query parameter와 dynamic parameter 지원",
+      "설정 파일을 통한 커스텀 라우트 타입 정의 기능",
     ],
     challenges: [
       {
         problem:
-          "Next.js의 라우팅 시스템에서 타입 안전성을 보장하는 것이 과제였습니다.",
+          "Next.js의 복잡한 파일 시스템 기반 라우팅에서 완벽한 타입 안전성을 보장해야 했습니다. 특히 동적 라우트와 중첩 라우트의 경우 타입 추론이 까다로웠습니다.",
         solutions: [
           "TypeScript의 Template Literal Types를 활용하여 라우트 문자열을 타입으로 변환",
           "재귀적 타입 추론을 통해 중첩된 라우트 구조도 정확하게 타입 추론",
-          "제네릭과 조건부 타입을 활용하여 동적 라우트 파라미터의 타입 안전성 확보",
+          "AST 분석을 통한 파일 시스템 기반 라우팅 구조 파악",
+          "설정 파일을 통해 커스텀 라우트 정의 지원",
         ],
         learned: [
-          "TypeScript의 고급 타입 시스템에 대한 깊은 이해",
+          "TypeScript의 고급 타입 시스템(Template Literal, Recursive Types)에 대한 깊은 이해",
           "Next.js의 파일 시스템 기반 라우팅의 동작 원리 파악",
-          "npm 패키지 배포와 버전 관리 경험",
+          "AST를 활용한 코드 분석 및 생성 기술 습득",
         ],
       },
       {
         problem:
-          "Next.js의 라우팅 시스템에서 타입 안전성을 보장하는 것이 과제였습니다.",
+          "기존 Next.js의 useRouter와 Link 컴포넌트를 타입 안전하게 오버라이딩하면서도, 개발자들이 쉽게 사용할 수 있는 CLI 도구로 만들어야 했습니다.",
         solutions: [
-          "TypeScript의 타입 시스템을 깊이 있게 활용하여 컴파일 타임에 라우트 오류를 방지하는 시스템을 구축했습니다.",
-          "재귀적 타입 추론을 통해 중첩된 라우트 구조도 정확하게 타입 추론",
-          "제네릭과 조건부 타입을 활용하여 동적 라우트 파라미터의 타입 안전성 확보",
+          "타입 오버라이딩을 통한 기존 Next.js 타입과의 호환성 유지",
+          "사용자 친화적인 CLI 인터페이스 설계 ('generate-router ./pages ./types/routes.d.ts -o'과 같은 직관적인 명령어)",
+          "자동 타입 생성 결과를 .d.ts 파일로 출력하여 즉시 사용 가능하도록 구현",
+          "상세한 사용 설명서와 예제 코드 제공으로 진입 장벽 낮춤",
         ],
         learned: [
-          "TypeScript의 타입 시스템을 깊이 있게 이해하고, Next.js의 라우팅 시스템과 파일 시스템 기반 라우팅의 동작 원리를 자세히 파악했습니다.",
-          "Next.js의 파일 시스템 기반 라우팅의 동작 원리 파악",
           "npm 패키지 배포와 버전 관리 경험",
+          "CLI 도구 개발과 사용자 경험 최적화",
+          "오픈소스 라이브러리 문서화의 중요성",
         ],
       },
     ],
     outcome: {
       achievements: [
-        "npm 패키지로 배포하여 전세계 개발자들이 사용할 수 있도록 공개",
+        "npm 패키지로 배포하여 전세계 개발자들이 사용할 수 있는 오픈소스 라이브러리 제작",
         "GitHub Actions를 통한 자동 배포 파이프라인 구축",
         "npm 패키지 버전 관리 및 문서화 자동화",
+        "타입스크립트 타입 시스템을 활용한 혁신적인 개발자 도구 제작",
+        "Next.js 13+의 app router와 pages router 모두 지원하는 유연한 설계",
       ],
       improvements: [
         "CLI 도구 개발을 통한 개발자 경험(DX) 향상",
@@ -76,7 +83,7 @@ export const projects = [
     },
     github: "https://github.com/hansolbangul/generate-router",
     demo: "https://blog.hansolbangul.com/post/library-generate-router-1",
-    thumbnail: "/images/generate-router-thumbnail.png",
+    thumbnail: "/images/projects/generate-router.png",
     images: [
       "/images/generate-router-1.png",
       "/images/generate-router-2.png",
