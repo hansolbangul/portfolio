@@ -5,7 +5,7 @@ import { useTheme } from "@/context/ThemeContext";
 import Image from "next/image";
 import Link from "next/link";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
-import ProjectModal from "./ProjectModal";
+import { useRouter } from "next/navigation";
 import { projects } from "@/data/projects";
 import type { ValidatedProject } from "@/data/projects";
 import ScrollReveal from "@/shared/components/animations/motion/ScrollReveal";
@@ -13,8 +13,7 @@ import HoverScale from "@/shared/components/animations/motion/HoverScale";
 
 const Projects = () => {
   const { theme } = useTheme();
-  const [selectedProject, setSelectedProject] =
-    useState<ValidatedProject | null>(null);
+  const router = useRouter();
 
   return (
     <section
@@ -35,7 +34,7 @@ const Projects = () => {
         {projects.map((project: ValidatedProject, i) => (
           <ScrollReveal key={project.title} delay={i * 0.2}>
             <div
-              onClick={() => setSelectedProject(project)}
+              onClick={() => router.push(`/projects/${project.id}`)}
               className={`grid md:grid-cols-2 gap-8 p-8 rounded-xl cursor-pointer backdrop-blur-sm ${
                 theme === "light"
                   ? "bg-white/70 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.16)]"
@@ -130,14 +129,6 @@ const Projects = () => {
           </ScrollReveal>
         ))}
       </div>
-
-      {selectedProject && (
-        <ProjectModal
-          project={selectedProject}
-          onClose={() => setSelectedProject(null)}
-          theme={theme}
-        />
-      )}
     </section>
   );
 };

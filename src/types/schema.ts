@@ -6,8 +6,8 @@ export const techStackSchema = z.record(z.string(), z.array(z.string()));
 // Challenge schema
 export const challengeSchema = z.object({
   problem: z.string(),
-  solution: z.string(),
-  learned: z.string(),
+  solutions: z.array(z.string()),
+  learned: z.array(z.string()),
 });
 
 // Outcome schema
