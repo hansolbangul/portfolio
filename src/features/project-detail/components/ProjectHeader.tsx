@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useTheme } from "@/context/ThemeContext";
 import type { ValidatedProject } from "@/data/projects";
-import ScrollReveal from "@/shared/components/animations/motion/ScrollReveal";
+import ProjectVideo from "./ProjectVideo";
 
 interface ProjectHeaderProps {
   project: ValidatedProject;
@@ -13,19 +13,24 @@ interface ProjectHeaderProps {
 
 export default function ProjectHeader({ project }: ProjectHeaderProps) {
   const { theme } = useTheme();
+  const isVideo = project.thumbnail.endsWith(".mp4");
 
   return (
     <>
       {/* Hero Section */}
-      <div className="relative w-full aspect-video rounded-xl overflow-hidden mb-12">
-        <Image
-          src={project.thumbnail}
-          alt={project.title}
-          fill
-          className="object-cover"
-          priority
-        />
-      </div>
+      {isVideo ? (
+        <ProjectVideo src={project.thumbnail} title={project.title} />
+      ) : (
+        <div className="relative w-full aspect-video rounded-xl overflow-hidden mb-12">
+          <Image
+            src={project.thumbnail}
+            alt={project.title}
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
+      )}
 
       {/* Project Header */}
       <div className="mb-12">

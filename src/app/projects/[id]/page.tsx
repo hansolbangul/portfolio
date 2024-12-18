@@ -15,7 +15,6 @@ interface Props {
 }
 
 export function generateMetadata({ params }: Props): Metadata {
-  console.log("generateMetadata", params.id);
   const project = getProject(params.id);
 
   if (!project) {
@@ -37,7 +36,6 @@ export function generateMetadata({ params }: Props): Metadata {
 }
 
 export default function ProjectDetailPage({ params }: Props) {
-  console.log("ProjectDetailPage", params.id);
   const project = getProject(params.id);
 
   if (!project) {
