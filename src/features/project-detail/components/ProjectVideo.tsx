@@ -13,10 +13,22 @@ export default function ProjectVideo({ src, title }: ProjectVideoProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isPiP, setIsPiP] = useState(false);
   const [isPipDisabled, setIsPipDisabled] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const { isIntersecting } = useIntersectionObserver(containerRef, {
     threshold: 0,
-    rootMargin: "-50% 0px",
+    rootMargin: isMobile ? "-20% 0px -20% 0px" : "-50% 0px",
   });
 
   useEffect(() => {
@@ -45,7 +57,7 @@ export default function ProjectVideo({ src, title }: ProjectVideoProps) {
       <div
         className={`${
           isPiP
-            ? "fixed bottom-4 right-4 w-[320px] aspect-video z-50 rounded-lg shadow-lg"
+            ? "fixed bottom-4 right-4 w-[280px] sm:w-[320px] aspect-video z-50 rounded-lg shadow-lg"
             : "relative w-full h-full"
         }`}
       >
@@ -58,6 +70,7 @@ export default function ProjectVideo({ src, title }: ProjectVideoProps) {
           loop
           autoPlay
           muted
+          playsInline
         />
         {isPiP && (
           <button
