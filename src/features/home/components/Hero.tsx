@@ -2,10 +2,8 @@
 
 import { motion, useMotionValue, useTransform, useScroll } from "framer-motion";
 import { useEffect, useRef } from "react";
-import { useTheme } from "@/context/ThemeContext";
 
 export default function Hero() {
-  const { theme } = useTheme();
   const containerRef = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -50,9 +48,7 @@ export default function Hero() {
         }}
       >
         <div
-          className={`text-6xl md:text-8xl font-bold mb-6 ${
-            theme === "light" ? "text-gray-800" : "text-white"
-          }`}
+          className={`text-6xl md:text-8xl font-bold mb-6 text-gray-800 dark:text-white`}
         >
           <div className="flex">
             {"안녕하세요".split("").map((char, index) => (
@@ -89,9 +85,7 @@ export default function Hero() {
                 key={index}
                 className={
                   index < 3
-                    ? theme === "light"
-                      ? "text-purple-600"
-                      : "text-purple-400"
+                    ? "text-purple-600"
                     : ""
                 }
                 initial={{
@@ -121,9 +115,7 @@ export default function Hero() {
           </div>
         </div>
         <motion.p
-          className={`text-xl md:text-2xl mb-8 ${
-            theme === "light" ? "text-gray-600" : "text-gray-300"
-          }`}
+          className={`text-xl md:text-2xl mb-8 text-gray-600 dark:text-gray-300`}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
@@ -139,11 +131,7 @@ export default function Hero() {
         >
           <motion.a
             href="#about"
-            className={`px-6 py-3 rounded-full transition-all ${
-              theme === "light"
-                ? "bg-purple-100 text-purple-700 hover:bg-purple-200"
-                : "bg-purple-500/20 text-purple-300 hover:bg-purple-500/30"
-            }`}
+            className={`px-6 py-3 rounded-full transition-all bg-purple-100 text-purple-700 hover:bg-purple-200`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >

@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useTheme } from '@/context/ThemeContext';
 
 interface Card {
   id: number;
@@ -12,7 +11,6 @@ interface Card {
 const emojis = ['🎨', '💻', '🎮', '📚', '🎵', '🎬', '🌟', '🚀'];
 
 const MemoryCard = () => {
-  const { theme } = useTheme();
   const [cards, setCards] = useState<Card[]>([]);
   const [flippedCards, setFlippedCards] = useState<number[]>([]);
   const [moves, setMoves] = useState(0);
@@ -90,42 +88,32 @@ const MemoryCard = () => {
   };
 
   return (
-    <div className={`p-6 rounded-xl ${
-      theme === 'light' ? 'bg-white' : 'bg-gray-900'
-    }`}>
-      <div className="text-center mb-6">
-        <h2 className={`text-2xl font-bold mb-2 ${
-          theme === 'light' ? 'text-gray-800' : 'text-white'
-        }`}>
-          Memory Game
-        </h2>
-        <p className={`mb-4 ${
-          theme === 'light' ? 'text-gray-600' : 'text-gray-300'
-        }`}>
-          Moves: {moves}
-        </p>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className={`px-4 py-2 rounded-lg ${
-            theme === 'light'
-              ? 'bg-purple-600 text-white hover:bg-purple-700'
-              : 'bg-purple-500 text-white hover:bg-purple-400'
-          }`}
-          onClick={initializeGame}
-        >
-          Reset Game
-        </motion.button>
+    <div className="p-8">
+      <div className="flex justify-between items-center mb-8">
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Memory Game</h2>
+        <div className="space-x-4">
+          <span className="text-gray-600 dark:text-gray-300">Moves: {moves}</span>
+          <button
+            onClick={initializeGame}
+            className="px-4 py-2 bg-purple-600 dark:bg-purple-500 text-white rounded-lg hover:bg-purple-700 dark:hover:bg-purple-400"
+          >
+            Reset
+          </button>
+        </div>
       </div>
 
       <div className="grid grid-cols-4 gap-4">
-        {cards.map(card => (
+        {cards.map((card) => (
           <motion.div
             key={card.id}
-            className={`aspect-square cursor-pointer perspective-1000 ${
-              card.isMatched ? 'opacity-50' : ''
+            className={`aspect-square rounded-xl cursor-pointer ${
+              card.isFlipped || card.isMatched
+                ? "bg-white dark:bg-gray-700"
+                : "bg-purple-100 dark:bg-purple-900"
             }`}
             onClick={() => handleCardClick(card.id)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             <motion.div
               className="relative w-full h-full transform-style-preserve-3d transition-transform duration-300"
@@ -139,9 +127,7 @@ const MemoryCard = () => {
               {/* 앞면 (물음표) */}
               <div
                 className={`absolute w-full h-full rounded-xl ${
-                  theme === "light"
-                    ? "bg-gradient-to-br from-violet-400 via-indigo-400 to-blue-500"
-                    : "bg-gradient-to-br from-violet-600 via-indigo-700 to-blue-800"
+                  "bg-gradient-to-br from-violet-400 via-indigo-400 to-blue-500"
                 } backface-hidden shadow-lg hover:shadow-xl transition-shadow duration-300`}
                 style={{ transform: "rotateY(0deg)" }}
               >
@@ -172,9 +158,7 @@ const MemoryCard = () => {
               </div>
               <div
                 className={`absolute w-full h-full flex items-center justify-center rounded-lg text-3xl ${
-                  theme === 'light'
-                    ? 'bg-white border-2 border-purple-200'
-                    : 'bg-gray-800 border-2 border-purple-500/30'
+                  "bg-white border-2 border-purple-200"
                 } backface-hidden [transform:rotateY(180deg)]`}
               >
                 {card.emoji}
@@ -193,28 +177,18 @@ const MemoryCard = () => {
             className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm"
           >
             <motion.div
-              className={`p-6 rounded-xl text-center ${
-                theme === 'light' ? 'bg-white' : 'bg-gray-900'
-              }`}
+              className="p-6 rounded-xl text-center bg-white dark:bg-gray-900"
             >
-              <h3 className={`text-2xl font-bold mb-4 ${
-                theme === 'light' ? 'text-gray-800' : 'text-white'
-              }`}>
+              <h3 className="text-2xl font-bold mb-4 text-gray-800 dark:text-white">
                 Congratulations! 🎉
               </h3>
-              <p className={`mb-6 ${
-                theme === 'light' ? 'text-gray-600' : 'text-gray-300'
-              }`}>
+              <p className="mb-6 text-gray-600 dark:text-gray-300">
                 You completed the game in {moves} moves!
               </p>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className={`px-4 py-2 rounded-lg ${
-                  theme === 'light'
-                    ? 'bg-purple-600 text-white hover:bg-purple-700'
-                    : 'bg-purple-500 text-white hover:bg-purple-400'
-                }`}
+                className="px-4 py-2 rounded-lg bg-purple-600 dark:bg-purple-500 text-white hover:bg-purple-700 dark:hover:bg-purple-400"
                 onClick={initializeGame}
               >
                 Play Again

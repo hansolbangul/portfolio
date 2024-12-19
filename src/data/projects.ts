@@ -29,12 +29,12 @@ export const projects = [
     features: [
       "CLI 명령어를 통한 간편한 라우터 타입 생성 ('generate-router' 명령어 제공)",
       "TypeScript의 타입 시스템을 활용하여 컴파일 타임에 잘못된 라우트 사용을 방지",
-      "pages 디렉토리와 app 디렉토리 구조 모두 지원 (--dir 옵션으로 선택)",
+      "pages 디렉토리와 app 디렉토리 구조 모두 지원",
       "override 기능을 통해 Next.js의 useRouter와 Link 컴포넌트의 타입을 자동으로 추론",
       "자동화된 타입 생성으로 개발자의 수동 타입 정의 작업 최소화",
       "동적 라우트([id], [...slug] 등)에 대한 타입 안전성 보장",
       "타입 안전한 query parameter와 dynamic parameter 지원",
-      "설정 파일을 통한 커스텀 라우트 타입 정의 기능",
+      "설정 파일을 통해 커스텀 라우트 타입 정의 기능",
     ],
     challenges: [
       {

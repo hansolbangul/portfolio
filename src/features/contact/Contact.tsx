@@ -1,6 +1,5 @@
 "use client";
 
-import { useTheme } from "@/context/ThemeContext";
 import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 import ScrollReveal from "@/shared/components/animations/motion/ScrollReveal";
 import HoverScale from "@/shared/components/animations/motion/HoverScale";
@@ -8,39 +7,30 @@ import HoverScale from "@/shared/components/animations/motion/HoverScale";
 const contactLinks = [
   {
     name: "GitHub",
-    icon: (theme: string) => (
+    icon: () => (
       <FaGithub 
-        className={`text-3xl transition-colors ${
-          theme === "light" 
-            ? "text-gray-800 group-hover:text-gray-600" 
-            : "text-gray-300 group-hover:text-white"
-        }`} 
+        className="text-3xl transition-colors text-gray-800 group-hover:text-gray-600 
+          dark:text-gray-300 dark:group-hover:text-white"
       />
     ),
     url: "https://github.com/hansolbangul",
   },
   {
     name: "LinkedIn",
-    icon: (theme: string) => (
+    icon: () => (
       <FaLinkedin 
-        className={`text-3xl transition-colors ${
-          theme === "light" 
-            ? "text-blue-600 group-hover:text-blue-700" 
-            : "text-blue-400 group-hover:text-blue-300"
-        }`} 
+        className="text-3xl transition-colors text-blue-600 group-hover:text-blue-700
+          dark:text-blue-400 dark:group-hover:text-blue-300"
       />
     ),
     url: "https://www.linkedin.com/in/hansolbangul/",
   },
   {
     name: "Email",
-    icon: (theme: string) => (
+    icon: () => (
       <FaEnvelope 
-        className={`text-3xl transition-colors ${
-          theme === "light" 
-            ? "text-red-600 group-hover:text-red-700" 
-            : "text-red-400 group-hover:text-red-300"
-        }`} 
+        className="text-3xl transition-colors text-red-600 group-hover:text-red-700
+          dark:text-red-400 dark:group-hover:text-red-300"
       />
     ),
     url: "mailto:ruaenddl981028@naver.com",
@@ -48,82 +38,33 @@ const contactLinks = [
 ];
 
 const Contact = () => {
-  const { theme } = useTheme();
-
   return (
-    <section
-      id="contact"
-      className="container mx-auto px-4 py-20 min-h-screen flex items-center justify-center"
-    >
-      <div className="max-w-4xl w-full">
+    <section id="contact" className="min-h-screen relative overflow-hidden">
+      <div className="max-w-6xl mx-auto px-4 py-20">
         <ScrollReveal>
-          <h2
-            className={`text-3xl font-bold mb-8 text-center ${
-              theme === "light" ? "text-gray-800" : "text-white"
-            }`}
-          >
-            Let's Connect
+          <h2 className="text-4xl font-bold mb-12 text-gray-800 dark:text-white">
+            Contact Me
           </h2>
         </ScrollReveal>
 
-        <ScrollReveal delay={0.2}>
-          <p
-            className={`text-center mb-12 ${
-              theme === "light" ? "text-gray-600" : "text-gray-300"
-            }`}
-          >
-            I'm always open to new opportunities and collaborations.
-            Feel free to reach out!
-          </p>
-        </ScrollReveal>
-
-        <div className="flex flex-wrap justify-center gap-8">
-          {contactLinks.map((link, index) => (
-            <ScrollReveal key={link.name} delay={0.4 + index * 0.1}>
-              <HoverScale>
-                <a
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`group flex flex-col items-center gap-4 p-8 rounded-xl backdrop-blur-sm ${
-                    theme === "light"
-                      ? "bg-white/70 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.16)]"
-                      : "bg-gray-900/30 shadow-[0_8px_30px_rgb(0,0,0,0.3)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.4)]"
-                  } transition-all duration-300`}
-                >
-                  <div className="p-4 rounded-full bg-opacity-20 backdrop-blur-sm">
-                    {link.icon(theme)}
-                  </div>
-                  <span
-                    className={`text-sm font-medium ${
-                      theme === "light" ? "text-gray-600" : "text-gray-300"
-                    }`}
-                  >
-                    {link.name}
-                  </span>
-                </a>
-              </HoverScale>
-            </ScrollReveal>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {contactLinks.map((link) => (
+            <HoverScale key={link.name}>
+              <a
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex flex-col items-center p-8 rounded-xl bg-white dark:bg-gray-800 
+                  shadow-lg hover:shadow-xl transition-all"
+              >
+                {link.icon()}
+                <span className="mt-4 font-medium text-gray-800 dark:text-white">
+                  {link.name}
+                </span>
+              </a>
+            </HoverScale>
           ))}
         </div>
-
-        <ScrollReveal delay={0.8}>
-          <div
-            className={`mt-16 p-8 rounded-lg text-center ${
-              theme === "light"
-                ? "bg-gray-50 text-gray-800"
-                : "bg-gray-800/50 text-gray-200"
-            }`}
-          >
-            <h3 className="text-xl font-semibold mb-4">
-              Looking for a Developer?
-            </h3>
-            <p className="mb-0">
-              I'm currently available for freelance work and full-time positions.
-              Let's build something amazing together!
-            </p>
-          </div>
-        </ScrollReveal>
       </div>
     </section>
   );

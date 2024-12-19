@@ -3,7 +3,6 @@
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
-import { useTheme } from "@/context/ThemeContext";
 import type { ValidatedProject } from "@/data/projects";
 import ProjectVideo from "./ProjectVideo";
 
@@ -12,7 +11,6 @@ interface ProjectHeaderProps {
 }
 
 export default function ProjectHeader({ project }: ProjectHeaderProps) {
-  const { theme } = useTheme();
   const isVideo = project.thumbnail.endsWith(".mp4");
 
   return (
@@ -34,18 +32,10 @@ export default function ProjectHeader({ project }: ProjectHeaderProps) {
 
       {/* Project Header */}
       <div className="mb-12">
-        <h1
-          className={`text-4xl font-bold mb-4 ${
-            theme === "light" ? "text-gray-800" : "text-white"
-          }`}
-        >
+        <h1 className="text-4xl font-bold mb-4 text-gray-800 dark:text-white">
           {project.title}
         </h1>
-        <p
-          className={`text-xl mb-6 ${
-            theme === "light" ? "text-gray-600" : "text-gray-300"
-          }`}
-        >
+        <p className="text-xl mb-6 text-gray-600 dark:text-gray-300">
           {project.description}
         </p>
         <div className="flex gap-4">
@@ -54,9 +44,10 @@ export default function ProjectHeader({ project }: ProjectHeaderProps) {
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-6 py-3 rounded-lg bg-gray-900 text-white hover:bg-gray-800 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-800 dark:bg-gray-700 text-white hover:bg-gray-700 dark:hover:bg-gray-600 transition-colors"
             >
-              <FaGithub className="mr-2" /> GitHub
+              <FaGithub size={20} />
+              <span>View Code</span>
             </Link>
           )}
           {project.demo && (
@@ -64,9 +55,10 @@ export default function ProjectHeader({ project }: ProjectHeaderProps) {
               href={project.demo}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-6 py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-500 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 dark:bg-blue-500 text-white hover:bg-blue-700 dark:hover:bg-blue-400 transition-colors"
             >
-              <FaExternalLinkAlt className="mr-2" /> Demo
+              <FaExternalLinkAlt size={16} />
+              <span>Live Demo</span>
             </Link>
           )}
         </div>

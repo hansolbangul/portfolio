@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useIntersectionObserver } from "@/shared/hooks/useIntersectionObserver";
-import { useTheme } from "@/context/ThemeContext";
 
 interface ProjectVideoProps {
   src: string;
@@ -14,7 +13,6 @@ export default function ProjectVideo({ src, title }: ProjectVideoProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isPiP, setIsPiP] = useState(false);
   const [isPipDisabled, setIsPipDisabled] = useState(false);
-  const { theme } = useTheme();
 
   const { isIntersecting } = useIntersectionObserver(containerRef, {
     threshold: 0,
@@ -57,18 +55,16 @@ export default function ProjectVideo({ src, title }: ProjectVideoProps) {
           title={title}
           className="w-full h-full object-cover rounded-lg"
           controls
+          loop
           autoPlay
           muted
-          loop
         />
         {isPiP && (
           <button
             onClick={handleClosePiP}
-            className={`absolute top-2 right-2 z-50 p-1.5 rounded-full shadow-lg transition-colors ${
-              theme === "dark"
-                ? "bg-gray-800/80 hover:bg-gray-800 text-white"
-                : "bg-white/80 hover:bg-white text-gray-800"
-            }`}
+            className="absolute top-2 right-2 z-50 p-1.5 rounded-full shadow-lg transition-colors 
+              bg-white/80 hover:bg-white dark:bg-gray-800/80 dark:hover:bg-gray-800 
+              text-gray-800 dark:text-white"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

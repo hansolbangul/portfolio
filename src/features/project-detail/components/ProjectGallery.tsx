@@ -1,6 +1,5 @@
 "use client";
 
-import { useTheme } from "@/context/ThemeContext";
 import type { ValidatedProject } from "@/data/projects";
 import Image from "next/image";
 import ScrollReveal from "@/shared/components/animations/motion/ScrollReveal";
@@ -18,32 +17,22 @@ interface ProjectGalleryProps {
 }
 
 export default function ProjectGallery({ project }: ProjectGalleryProps) {
-  const { theme } = useTheme();
-
   if (!project.images || project.images.length === 0) {
     return null;
   }
 
   return (
     <ScrollReveal>
-      <div
-        className={`p-8 rounded-xl ${
-          theme === "light" ? "bg-white shadow-lg" : "bg-gray-800"
-        }`}
-      >
-        <h2
-          className={`text-2xl font-bold mb-6 ${
-            theme === "light" ? "text-gray-800" : "text-white"
-          }`}
-        >
+      <div className="p-8 rounded-xl bg-white dark:bg-gray-800 shadow-lg">
+        <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">
           Project Gallery
         </h2>
         <div className="relative -mx-8">
           <Swiper
             effect="coverflow"
-            grabCursor={true}
-            centeredSlides={true}
-            slidesPerView="1.2"
+            grabCursor
+            centeredSlides
+            slidesPerView={1.2}
             coverflowEffect={{
               rotate: 0,
               stretch: 0,

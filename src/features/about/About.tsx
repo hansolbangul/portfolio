@@ -1,7 +1,6 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useTheme } from "@/context/ThemeContext";
 import Image from "next/image";
 import { useRef } from "react";
 
@@ -21,7 +20,6 @@ const introductions = [
 ];
 
 export default function About() {
-  const { theme } = useTheme();
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -32,21 +30,21 @@ export default function About() {
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
   return (
-    <section ref={containerRef} className="py-20 px-4 md:px-8 relative">
+    <section
+      ref={containerRef} className="py-20 px-4 md:px-8 relative"
+    >
       <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
+        className="container mx-auto px-4 space-y-20"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-        className="max-w-6xl mx-auto"
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
+        <div className="flex flex-col md:flex-row gap-12 items-center">
           <motion.div
-            initial={{ x: -50, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="relative group w-full max-w-md mx-auto"
+            className="relative group w-full md:w-1/2"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.8 }}
           >
             <div className="relative overflow-hidden transform transition-transform group-hover:scale-105 h-[400px] w-full">
               <Image
@@ -77,9 +75,7 @@ export default function About() {
               whileInView={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className={`text-4xl font-bold mb-6 ${
-                theme === "light" ? "text-gray-800" : "text-white"
-              }`}
+              className="text-4xl font-bold mb-6 text-gray-800 dark:text-white"
             >
               About Me
             </motion.h2>
@@ -88,9 +84,7 @@ export default function About() {
               whileInView={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
-              className={`text-lg ${
-                theme === "light" ? "text-gray-800" : "text-gray-300"
-              }`}
+              className="text-lg text-gray-800 dark:text-gray-300"
             >
               혁신적인 개발자 경험을 만들어가는 소프트웨어 엔지니어입니다.
             </motion.p>
@@ -111,11 +105,7 @@ export default function About() {
                 viewport={{ once: true }}
                 className="md:w-1/3"
               >
-                <h3
-                  className={`text-2xl font-bold ${
-                    theme === "light" ? "text-purple-600" : "text-purple-400"
-                  }`}
-                >
+                <h3 className="text-2xl font-bold text-purple-600 dark:text-purple-400">
                   {intro.title}
                 </h3>
               </motion.div>
@@ -126,11 +116,7 @@ export default function About() {
                 viewport={{ once: true }}
                 className="md:w-2/3"
               >
-                <p
-                  className={`text-lg leading-relaxed ${
-                    theme === "light" ? "text-gray-800" : "text-gray-300"
-                  }`}
-                >
+                <p className="text-lg leading-relaxed text-gray-800 dark:text-gray-300">
                   {intro.content}
                 </p>
               </motion.div>
