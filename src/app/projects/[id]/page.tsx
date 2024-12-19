@@ -14,8 +14,8 @@ interface Props {
   };
 }
 
-export function generateMetadata({ params }: Props): Metadata {
-  const project = getProject(params.id);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const project = getProject((await params).id);
 
   if (!project) {
     return {
@@ -35,8 +35,8 @@ export function generateMetadata({ params }: Props): Metadata {
   };
 }
 
-export default function ProjectDetailPage({ params }: Props) {
-  const project = getProject(params.id);
+export default async function ProjectDetailPage({ params }: Props) {
+  const project = getProject((await params).id);
 
   if (!project) {
     notFound();

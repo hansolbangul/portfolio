@@ -83,7 +83,7 @@ export const projects = [
     },
     github: "https://github.com/hansolbangul/generate-router",
     demo: "https://blog.hansolbangul.com/post/library-generate-router-1",
-    thumbnail: "/videos/pip-test.mp4",
+    thumbnail: "/videos/generate-router-video.mp4",
     images: [
       "/images/profile.jpeg",
       "/images/profile.jpeg",
