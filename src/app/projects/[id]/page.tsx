@@ -43,8 +43,8 @@ export default async function ProjectDetailPage({ params }: Props) {
   }
 
   return (
-    <div className="min-h-screen py-20">
-      <div className="container mx-auto px-4">
+    <div className="min-h-screen py-20 px-4 md:px-8">
+      <div className="max-w-6xl mx-auto">
         <ProjectHeader project={project} />
         <ProjectInfo project={project} />
         <TechStack project={project} />

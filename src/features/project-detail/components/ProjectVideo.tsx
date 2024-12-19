@@ -54,45 +54,47 @@ export default function ProjectVideo({ src, title }: ProjectVideoProps) {
       ref={containerRef}
       className="relative w-full aspect-video rounded-xl overflow-hidden mb-12"
     >
-      <div
-        className={`${
-          isPiP
-            ? "fixed bottom-4 right-4 w-[280px] sm:w-[320px] aspect-video z-50 rounded-lg shadow-lg"
-            : "relative w-full h-full"
-        }`}
-      >
-        <video
-          ref={videoRef}
-          src={src}
-          title={title}
-          className="w-full h-full object-cover rounded-lg"
-          controls
-          loop
-          autoPlay
-          muted
-          playsInline
-        />
-        {isPiP && (
-          <button
-            onClick={handleClosePiP}
-            className="absolute top-2 right-2 z-50 p-1.5 rounded-full shadow-lg transition-colors 
-              bg-white/80 hover:bg-white dark:bg-gray-800/80 dark:hover:bg-gray-800 
-              text-gray-800 dark:text-white"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4"
-              viewBox="0 0 20 20"
-              fill="currentColor"
+      <div className="relative w-full h-full max-w-6xl mx-auto">
+        <div
+          className={`${
+            isPiP
+              ? "fixed bottom-4 right-4 w-[280px] sm:w-[320px] aspect-video z-50 rounded-lg shadow-lg"
+              : "relative w-full h-full"
+          } origin-bottom-right`}
+        >
+          <video
+            ref={videoRef}
+            src={src}
+            title={title}
+            className="w-full h-full object-cover rounded-lg"
+            controls
+            loop
+            autoPlay
+            muted
+            playsInline
+          />
+          {isPiP && (
+            <button
+              onClick={handleClosePiP}
+              className="absolute top-2 right-2 z-50 p-1.5 rounded-full shadow-lg transition-colors 
+                bg-white/80 hover:bg-white dark:bg-gray-800/80 dark:hover:bg-gray-800 
+                text-gray-800 dark:text-white"
             >
-              <path
-                fillRule="evenodd"
-                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </button>
-        )}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
