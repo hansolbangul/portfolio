@@ -67,6 +67,10 @@ export default function ProjectVideo({ src, title }: ProjectVideoProps) {
             src={src}
             title={title}
             className="w-full h-full object-cover rounded-lg"
+            style={{
+              maxHeight: isPiP ? 'none' : '80vh',
+              objectFit: 'contain'
+            }}
             controls
             loop
             autoPlay
