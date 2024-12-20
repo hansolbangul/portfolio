@@ -166,11 +166,13 @@ export const projects = [
     },
     github: "https://github.com/hansolbangul/notion-blog",
     demo: "https://blog.hansolbangul.com",
-    thumbnail: "/images/notion-blog-thumbnail.png",
+    thumbnail: "/videos/notion-blog-video.mp4",
     images: [
-      "/images/notion-blog-1.png",
-      "/images/notion-blog-2.png",
-      "/images/notion-blog-3.png",
+      "/images/notion-blog/notion-blog-1.png",
+      "/images/notion-blog/notion-blog-2.png",
+      "/images/notion-blog/notion-blog-3.png",
+      "/images/notion-blog/notion-blog-4.png",
+      "/images/notion-blog/notion-blog-5.png",
     ],
   },{
     id: 3,
@@ -266,7 +268,7 @@ export const projects = [
     },
     github: "https://github.com/hansolbangul/medicube-cart",
     demo: "https://cart.medicube.co.kr",
-    thumbnail: "/images/medicube-thumbnail.png",
+    thumbnail: "/videos/cart-medicube-video.mp4",
     images: [
       "/images/medicube-1.png",
       "/images/medicube-2.png",

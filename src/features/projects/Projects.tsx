@@ -35,7 +35,7 @@ const Projects = () => {
                 <HoverScale scale={1.02}>
                   <div className="relative aspect-video overflow-hidden rounded-lg">
                     <Image
-                      src={project.thumbnail || "/projects/default-thumbnail.jpg"}
+                      src={project.images?.[0] || "/projects/default-thumbnail.jpg"}
                       alt={project.title}
                       fill
                       className="object-cover"
