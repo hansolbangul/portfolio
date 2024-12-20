@@ -11,23 +11,28 @@ interface ProjectHeaderProps {
 }
 
 export default function ProjectHeader({ project }: ProjectHeaderProps) {
-  const isVideo = project.thumbnail.endsWith(".mp4");
+  const isThumbnail = !!project.thumbnail || false;
+  const isVideo = isThumbnail && project.thumbnail?.endsWith(".mp4");
 
   return (
     <>
       {/* Hero Section */}
-      {isVideo ? (
-        <ProjectVideo src={project.thumbnail} title={project.title} />
+      {isThumbnail ? (
+        isVideo ? (
+          <ProjectVideo src={project.thumbnail!} title={project.title} />
+        ) : (
+          <div className="relative w-full aspect-video rounded-xl overflow-hidden mb-12">
+            <Image
+              src={project.thumbnail!}
+              alt={project.title}
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
+        )
       ) : (
-        <div className="relative w-full aspect-video rounded-xl overflow-hidden mb-12">
-          <Image
-            src={project.thumbnail}
-            alt={project.title}
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
+        <div className="h-14" />
       )}
 
       {/* Project Header */}

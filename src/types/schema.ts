@@ -30,7 +30,7 @@ export const projectDetailSchema = z.object({
   outcome: outcomeSchema,
   github: z.string().url().optional(),
   demo: z.string().url().optional(),
-  thumbnail: z.string(),
+  thumbnail: z.string().optional(),
   images: z.array(z.string()).optional(),
 });
 

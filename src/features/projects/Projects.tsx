@@ -34,12 +34,20 @@ const Projects = () => {
               >
                 <HoverScale scale={1.02}>
                   <div className="relative aspect-video overflow-hidden rounded-lg">
-                    <Image
-                      src={project.images?.[0] || "/projects/default-thumbnail.jpg"}
-                      alt={project.title}
-                      fill
-                      className="object-contain"
-                    />
+                    {project.images ? (
+                      <Image
+                        src={project.images[0]}
+                        alt={project.title}
+                        fill
+                        className="object-contain"
+                      />
+                    ) : (
+                      <div className="h-full w-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                        <p className="text-gray-600 dark:text-gray-300 text-lg font-bold">
+                          No Image
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </HoverScale>
 

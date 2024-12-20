@@ -1,5 +1,5 @@
 import { projectDetailSchema, type ProjectDetail } from "@/types/schema";
- 
+
 export const projects = [
   {
     id: 1,
@@ -8,22 +8,12 @@ export const projects = [
       "Next.js의 라우팅 시스템을 위한 타입 안전한 라우터 생성 CLI 라이브러리입니다. 'generate-router' 명령어 한 번으로 파일 시스템 기반의 라우팅을 TypeScript 타입으로 자동 생성하여 개발자 경험을 향상시킵니다.",
     period: "2023.12 - 현재",
     team: "개인 프로젝트",
-    role: "개발자",
+    role: "프로젝트 개발",
     techStack: {
-      개발: [
-        "TypeScript",
-        "Node.js",
-        "Rollup",
-        "Jest",
-        "PNPM",
-        "GitHub Actions",
-        "Yargs",
-      ],
-      프론트엔드: [],
-      백엔드: [],
-      개발도구: [],
+      개발: ["TypeScript", "Node.js", "Rollup", "PNPM", "Yargs"],
+      테스트: ["Jest"],
+      개발도구: ["Github", "Github Actions"],
       모바일: [],
-      테스트: [],
       모니터링: [],
     },
     features: [
@@ -84,26 +74,28 @@ export const projects = [
     github: "https://github.com/hansolbangul/generate-router",
     demo: "https://blog.hansolbangul.com/post/library-generate-router-1",
     thumbnail: "/videos/generate-router-video.mp4",
-    images: [
-      "/images/profile.jpeg",
-      "/images/profile.jpeg",
-      "/images/profile.jpeg",
-    ],
-  },{
+  },
+  {
     id: 2,
     title: "기술 블로그 개발",
     description:
       "Notion API를 기반으로 하는 개인 기술 블로그 프로젝트로, ISR과 React-Query를 활용하여 초기 로딩 성능을 극대화하고 데이터 관리의 효율성을 높였습니다. 또한 Turborepo를 통한 모노레포 구조를 도입하여 다른 프로젝트와 UI 및 기능을 공유할 수 있도록 개발했습니다.",
     period: "2024.01 - 진행 중",
     team: "개인 프로젝트",
-    role: "개발자",
+    role: "프로젝트 개발",
     techStack: {
-      개발: ["Next.js", "TypeScript", "React-Query", "NotionAPI", "Vercel"],
-      프론트엔드: ["TailwindCSS"],
-      백엔드: [],
+      개발: [
+        "Next.js",
+        "TypeScript",
+        "React-Query",
+        "NotionAPI",
+        "Vercel",
+        "TailwindCSS",
+        "PNPM",
+      ],
+      테스트: [],
       개발도구: ["GitHub", "GitHub Actions"],
       모바일: [],
-      테스트: [],
       모니터링: [],
     },
     features: [
@@ -115,8 +107,7 @@ export const projects = [
     ],
     challenges: [
       {
-        problem:
-          "Notion API 호출 시간이 길어 배포 속도가 느려졌습니다.",
+        problem: "Notion API 호출 시간이 길어 배포 속도가 느려졌습니다.",
         solutions: [
           "Notion API의 데이터를 최초 1회 호출 후 캐싱하여 빌드 시간을 단축",
           "빌드 프로세스 최적화를 위해 React-Query의 prefetchQuery를 활용",
@@ -174,21 +165,28 @@ export const projects = [
       "/images/notion-blog/notion-blog-4.png",
       "/images/notion-blog/notion-blog-5.png",
     ],
-  },{
+  },
+  {
     id: 3,
     title: "메디큐브/포맨트 도산 스토어 장바구니 개발",
     description:
       "에이피알의 메디큐브/포맨트 도산 스토어에서 사용되는 장바구니 웹 애플리케이션 개발 프로젝트입니다. 서버리스 아키텍처로 설계된 웹 애플리케이션으로, QR코드 기반의 상품 리스트 제공, 다국어 지원, QR Scanner 기능을 통한 상품 확인 등 유저와 관리자를 위한 인터랙티브한 기능을 제공합니다.",
     period: "2024.08 - 2024.08",
     team: "에이피알",
-    role: "개발자",
+    role: "서버리스 개발 및 프론트엔드 개발",
     techStack: {
-      개발: ["React.js", "Amplify", "DynamoDB", "Styled-Components", "Framer-Motion"],
-      프론트엔드: ["qrcode", "i18n"],
-      백엔드: [],
+      개발: [
+        "React.js",
+        "Amplify",
+        "DynamoDB",
+        "Styled-Components",
+        "Framer-Motion",
+        "qrcode",
+        "i18n",
+      ],
+      테스트: [],
       개발도구: ["GitHub", "GitHub Actions"],
       모바일: [],
-      테스트: [],
       모니터링: [],
     },
     features: [
@@ -201,7 +199,7 @@ export const projects = [
     ],
     challenges: [
       {
-        problem: 
+        problem:
           "다국어 지원을 위해 다수의 언어에 대응하는 효율적인 번역 구조를 설계해야 했습니다.",
         solutions: [
           "i18n 라이브러리를 활용하여 다국어 번역 파일을 구조화",
@@ -213,7 +211,7 @@ export const projects = [
         ],
       },
       {
-        problem: 
+        problem:
           "서버리스 환경에서 프론트엔드 단에서 상품 관리 기능을 구현해야 했습니다.",
         solutions: [
           "Amplify와 DynamoDB를 연동하여 서버리스 환경을 구축",
@@ -226,7 +224,7 @@ export const projects = [
         ],
       },
       {
-        problem: 
+        problem:
           "유저가 QR코드를 통해 상품 정보를 직관적으로 확인하고, 관리자 페이지에서는 QR Scanner로 상품 리스트를 리딩해야 했습니다.",
         solutions: [
           "qrcode 라이브러리를 활용해 유저의 장바구니 데이터를 QR코드로 변환하여 시각적 제공",
@@ -240,7 +238,7 @@ export const projects = [
         ],
       },
       {
-        problem: 
+        problem:
           "앱과 유사한 라우팅 경험을 제공하기 위해 모바일 웹에서도 자연스러운 페이지 전환을 구현해야 했습니다.",
         solutions: [
           "Framer-Motion을 활용하여 페이지 전환 애니메이션을 추가해 자연스러운 라우팅 경험 제공",
@@ -266,8 +264,7 @@ export const projects = [
         "모바일 웹에서 사용자 경험을 향상시키기 위해 라우트 전환 애니메이션 최적화",
       ],
     },
-    github: "https://github.com/hansolbangul/medicube-cart",
-    demo: "https://cart.medicube.co.kr",
+    demo: "https://main.d2lkvlz3wv98bl.amplifyapp.com/",
     thumbnail: "/videos/cart-medicube-video.mp4",
     images: [
       "/images/cart-medicube/cart-medicube-1.png",
@@ -278,7 +275,8 @@ export const projects = [
       "/images/cart-medicube/cart-medicube-6.png",
       "/images/cart-medicube/cart-medicube-7.png",
     ],
-  },{
+  },
+  {
     id: 4,
     title: "포토그레이 웹앱 개발",
     description:
@@ -288,22 +286,18 @@ export const projects = [
     role: "개발자",
     techStack: {
       개발: [
-        "Next.js", 
-        "TypeScript", 
-        "React-Query", 
-        "Flutter", 
-        "Zustand", 
-        "Styled-Components", 
-        "Jest", 
-        "Cypress", 
-        "i18n", 
-        "Sentry"
+        "Next.js",
+        "TypeScript",
+        "React-Query",
+        "Flutter",
+        "Zustand",
+        "Styled-Components",
+        "i18n",
+        "React-Portal",
       ],
-      프론트엔드: ["React-Portal"],
-      백엔드: [],
+      테스트: ["Jest", "Cypress"],
       개발도구: ["GitHub", "GitHub Actions", "Jenkins"],
       모바일: ["Flutter"],
-      테스트: ["Jest", "Cypress"],
       모니터링: ["Sentry"],
     },
     features: [
@@ -319,7 +313,7 @@ export const projects = [
     ],
     challenges: [
       {
-        problem: 
+        problem:
           "웹과 앱 간의 데이터 통신이 필요한 상황에서 효과적인 데이터 교환 및 로그인 유지 방안을 마련해야 했습니다.",
         solutions: [
           "Flutter의 WebViewController.runJavaScript를 활용하여 앱과 웹 간의 통신 기능 구현",
@@ -333,7 +327,7 @@ export const projects = [
         ],
       },
       {
-        problem: 
+        problem:
           "유저 경험을 개선하기 위해 느린 API 요청 대기 시간을 최소화해야 했습니다.",
         solutions: [
           "React-Query의 낙관적 업데이트(Optimistic Update) 기능을 활용하여 사용자 경험 개선",
@@ -345,7 +339,7 @@ export const projects = [
         ],
       },
       {
-        problem: 
+        problem:
           "서비스의 무결성을 보장하고, 새로운 기능 출시 후에도 안정성을 확보할 방법이 필요했습니다.",
         solutions: [
           "Jest를 사용하여 유닛 테스트를 도입하고 커버리지 90% 이상을 유지",
@@ -359,7 +353,7 @@ export const projects = [
         ],
       },
       {
-        problem: 
+        problem:
           "서비스의 안정성을 보장하기 위해 예기치 않은 에러와 유저 불편 사항에 신속히 대응해야 했습니다.",
         solutions: [
           "Sentry를 도입하여 서비스의 런타임 에러를 실시간으로 모니터링",
@@ -371,7 +365,7 @@ export const projects = [
         ],
       },
       {
-        problem: 
+        problem:
           "재사용 가능한 컴포넌트를 구현하여 코드의 중복을 줄이고 생산성을 높여야 했습니다.",
         solutions: [
           "Compound, Function, Composition, Render 패턴을 적용하여 유연한 컴포넌트 설계",
@@ -399,15 +393,18 @@ export const projects = [
         "재사용 가능한 컴포넌트 패턴의 이해 및 생산성 향상을 위한 개발 패턴 개선",
       ],
     },
-    github: "https://github.com/hansolbangul/photogray",
-    demo: "https://photogray.co.kr",
-    thumbnail: "/images/photogray-thumbnail.png",
+    demo: "https://4cut-ranking.com/",
+    thumbnail: "/videos/4cut-ranking-video.mp4",
     images: [
-      "/images/photogray-1.png",
-      "/images/photogray-2.png",
-      "/images/photogray-3.png",
+      "/images/4cut-ranking/4cut-ranking-1.jpeg",
+      "/images/4cut-ranking/4cut-ranking-2.jpeg",
+      "/images/4cut-ranking/4cut-ranking-3.jpeg",
+      "/images/4cut-ranking/4cut-ranking-4.jpeg",
+      "/images/4cut-ranking/4cut-ranking-5.jpeg",
+      "/images/4cut-ranking/4cut-ranking-6.JPG",
     ],
-  },{
+  },
+  {
     id: 5,
     title: "메디큐브 피부진단 서비스 웹 개발",
     description:
@@ -416,12 +413,16 @@ export const projects = [
     team: "에이피알",
     role: "개발자",
     techStack: {
-      개발: ["Gatsby.js", "TypeScript", "Emotion", "React-Hook-Form", "Recharts"],
-      프론트엔드: [],
-      백엔드: [],
+      개발: [
+        "Gatsby.js",
+        "TypeScript",
+        "Emotion",
+        "React-Hook-Form",
+        "Recharts",
+      ],
+      테스트: [],
       개발도구: ["GitHub", "GitHub Actions"],
       모바일: [],
-      테스트: [],
       모니터링: [],
     },
     features: [
@@ -433,7 +434,7 @@ export const projects = [
     ],
     challenges: [
       {
-        problem: 
+        problem:
           "유저의 얼굴을 카메라로 촬영한 후 외부 피부진단 솔루션에 이미지를 전송할 때, 딜레이로 인한 사용자 경험 저하가 발생했습니다.",
         solutions: [
           "이미지 전송을 비동기 처리하여 유저가 다음 작업을 할 수 있도록 대기 시간을 제거",
@@ -445,7 +446,7 @@ export const projects = [
         ],
       },
       {
-        problem: 
+        problem:
           "피부진단에 사용된 OpenCV 모듈의 메모리 누수로 인해 화면 버벅임과 성능 저하가 발생했습니다.",
         solutions: [
           "OpenCV 모듈의 메모리 누수를 추적하고 싱글턴 패턴을 적용하여 메모리 할당을 최소화",
@@ -457,7 +458,7 @@ export const projects = [
         ],
       },
       {
-        problem: 
+        problem:
           "피부 진단 결과를 직관적으로 보여줄 대시보드를 개발해야 했으며, 데이터의 시각화가 요구되었습니다.",
         solutions: [
           "Recharts 라이브러리를 활용하여 피부 진단 결과를 시각화한 대시보드를 개발",
@@ -469,7 +470,7 @@ export const projects = [
         ],
       },
       {
-        problem: 
+        problem:
           "피부 진단 결과를 QR 코드로 제공해야 했으며, URL에 진단 정보를 포함해야 했습니다.",
         solutions: [
           "Base64로 인코딩된 피부 진단 데이터를 URL로 변환하고 qrcode 라이브러리를 통해 QR 코드 생성",
@@ -494,15 +495,8 @@ export const projects = [
         "코드 품질 개선을 통해 사용자 경험을 향상하고 성능을 최적화",
       ],
     },
-    github: "https://github.com/hansolbangul/medicube-diagnosis",
-    demo: "https://diagnosis.medicube.co.kr",
-    thumbnail: "/images/medicube-diagnosis-thumbnail.png",
-    images: [
-      "/images/medicube-diagnosis-1.png",
-      "/images/medicube-diagnosis-2.png",
-      "/images/medicube-diagnosis-3.png",
-    ],
-  },{
+  },
+  {
     id: 6,
     title: "포토그레이 어드민 페이지",
     description:
@@ -512,20 +506,18 @@ export const projects = [
     role: "개발자",
     techStack: {
       개발: [
-        "React.js", 
-        "TypeScript", 
-        "React-Query", 
-        "Zustand", 
-        "Styled-Components", 
-        "Jest", 
-        "Chart.js", 
-        "Sentry"
+        "React.js",
+        "TypeScript",
+        "React-Query",
+        "Zustand",
+        "Styled-Components",
+        "Chart.js",
+        "React-Portal",
+        "React-Modal",
       ],
-      프론트엔드: ["React-Portal", "React-Modal"],
-      백엔드: [],
+      테스트: ["Jest", "MSW"],
       개발도구: ["GitHub", "GitHub Actions", "Jenkins"],
       모바일: [],
-      테스트: ["Jest", "MSW"],
       모니터링: ["Sentry"],
     },
     features: [
@@ -540,7 +532,7 @@ export const projects = [
     ],
     challenges: [
       {
-        problem: 
+        problem:
           "서비스 내에서 비즈니스 로직과 뷰 로직이 같은 파일에 혼재되어 코드의 유지보수와 가독성이 떨어졌습니다.",
         solutions: [
           "비즈니스 로직과 뷰 로직을 분리하여 컨테이너/프레젠테이션 패턴을 적용",
@@ -552,7 +544,7 @@ export const projects = [
         ],
       },
       {
-        problem: 
+        problem:
           "React-Query V4에서 V5로 마이그레이션을 진행하면서 Suspense를 적용해야 했습니다.",
         solutions: [
           "React-Query V5의 Suspense 옵션을 활성화하여 더 나은 사용자 경험 제공",
@@ -564,7 +556,7 @@ export const projects = [
         ],
       },
       {
-        problem: 
+        problem:
           "백엔드 API가 미완성 상태로 프론트엔드 개발이 지연되는 병목 현상이 발생했습니다.",
         solutions: [
           "MSW(Mock Service Worker)를 사용하여 목업 데이터로 프론트엔드 개발을 진행",
@@ -576,7 +568,7 @@ export const projects = [
         ],
       },
       {
-        problem: 
+        problem:
           "기존의 React-Modal을 무분별하게 사용하면서 불필요한 랜더링과 메모리 사용량이 증가했습니다.",
         solutions: [
           "Custom Portal을 개발하여 불필요한 모달의 렌더링을 최소화",
@@ -588,7 +580,7 @@ export const projects = [
         ],
       },
       {
-        problem: 
+        problem:
           "서비스의 안정성을 보장하기 위해 사용자 에러에 신속히 대응할 수 있는 체계를 마련해야 했습니다.",
         solutions: [
           "Sentry를 도입하여 런타임 에러를 실시간으로 모니터링",
@@ -607,7 +599,7 @@ export const projects = [
         "대시보드에 촬영 지표, 다운로드 수, 체류 시간 등 비즈니스 인사이트를 시각화",
         "MSW를 통한 프론트엔드와 백엔드의 개발 병목 현상 해소 및 개발 생산성 향상",
         "Sentry를 활용한 실시간 에러 모니터링을 통해 서비스의 안정성 확보",
-        "CI/CD 환경 구축을 통해 안정적인 배포 프로세스를 확립",
+        "GitHub Actions + Jenkins를 활용한 CI/CD 파이프라인 구축 및 자동화",
       ],
       improvements: [
         "Suspense를 통해 초기 로딩과 사용자 경험을 개선하며 효율적인 렌더링 전략을 구현",
@@ -616,15 +608,8 @@ export const projects = [
         "Sentry로 유저 이슈에 대한 빠른 대응 체계를 구축",
       ],
     },
-    github: "https://github.com/hansolbangul/photogray-admin",
-    demo: "https://admin.photogray.co.kr",
-    thumbnail: "/images/photogray-admin-thumbnail.png",
-    images: [
-      "/images/photogray-admin-1.png",
-      "/images/photogray-admin-2.png",
-      "/images/photogray-admin-3.png",
-    ],
-  },{
+  },
+  {
     id: 8,
     title: "에임드 홈페이지 & 트라이베카 홈페이지",
     description:
@@ -634,11 +619,9 @@ export const projects = [
     role: "퍼블리셔",
     techStack: {
       개발: ["HTML", "CSS", "SCSS", "JavaScript", "IntersectionObserver"],
-      프론트엔드: [],
-      백엔드: [],
+      테스트: [],
       개발도구: ["GitHub"],
       모바일: [],
-      테스트: [],
       모니터링: [],
     },
     features: [
@@ -650,8 +633,7 @@ export const projects = [
     ],
     challenges: [
       {
-        problem: 
-          "초기 리소스 로드 시간이 느려 사용자 이탈률이 높아졌습니다.",
+        problem: "초기 리소스 로드 시간이 느려 사용자 이탈률이 높아졌습니다.",
         solutions: [
           "이미지와 영상의 용량 다이어트를 진행하여 초기 리소스 로드 속도를 최적화",
           "필요한 시점에 리소스를 로드하기 위해 Lazy Loading 기술 적용",
@@ -662,7 +644,7 @@ export const projects = [
         ],
       },
       {
-        problem: 
+        problem:
           "스크롤 이벤트 기반의 인터랙티브한 애니메이션을 구현해야 했습니다.",
         solutions: [
           "IntersectionObserver API를 활용하여 스크롤에 따른 애니메이션을 구현",
@@ -674,7 +656,7 @@ export const projects = [
         ],
       },
       {
-        problem: 
+        problem:
           "다국어 지원을 통해 글로벌 사용자에게 다양한 언어로 웹사이트를 제공해야 했습니다.",
         solutions: [
           "HTML 및 CSS 구조에서 다국어 지원을 위해 언어 속성을 추가",
@@ -700,29 +682,35 @@ export const projects = [
         "다국어 지원을 통해 글로벌 사용자 접근성을 향상",
       ],
     },
-    github: "https://github.com/hansolbangul/aimed-tribeca",
-    demo: "https://aimed.co.kr",
-    thumbnail: "/images/aimed-tribeca-thumbnail.png",
+    demo: "https://aimed.xyz/",
+    thumbnail: "/videos/aimed-video.mp4",
     images: [
-      "/images/aimed-tribeca-1.png",
-      "/images/aimed-tribeca-2.png",
-      "/images/aimed-tribeca-3.png",
+      "/images/aimed/aimed-1.png",
+      "/images/aimed/aimed-2.png",
+      "/images/aimed/aimed-3.png",
+      "/images/aimed/aimed-4.png",
+      "/images/aimed/aimed-5.png",
+      "/images/aimed/aimed-6.png",
+      "/images/aimed/aimed-7.png",
+      "/images/aimed/aimed-8.png",
+      "/images/aimed/aimed-9.png",
+      "/images/aimed/aimed-10.png",
+      "/images/aimed/aimed-11.png",
     ],
-  },{
+  },
+  {
     id: 9,
     title: "FarmOS",
     description:
       "스마트팜 농장 제어 웹 서비스로, 실시간 데이터 시각화 대시보드와 장비 제어 기능을 구현한 프로젝트입니다. MQTT 통신을 활용하여 농장의 장비와 실시간으로 소통하고, 데이터 조회 및 CSV 내보내기 기능을 통해 데이터 관리의 효율성을 향상시켰습니다.",
     period: "2021.08 - 2022.06",
     team: "지농",
-    role: "FE 서브 개발자",
+    role: "FE 서브 개발 및 백엔드 개발",
     techStack: {
       개발: ["Vue.js", "Vuex", "Node.js", "Express", "Chart.js"],
-      프론트엔드: [],
-      백엔드: [],
+      테스트: [],
       개발도구: ["GitHub"],
       모바일: [],
-      테스트: [],
       모니터링: [],
     },
     features: [
@@ -735,7 +723,7 @@ export const projects = [
     ],
     challenges: [
       {
-        problem: 
+        problem:
           "초단위 데이터의 실시간 시각화 대시보드를 구현해야 했고, 대량의 데이터를 렌더링하는 동안 성능 저하가 발생했습니다.",
         solutions: [
           "Chart.js 라이브러리를 활용하여 실시간 데이터 스트림을 시각화",
@@ -748,7 +736,7 @@ export const projects = [
         ],
       },
       {
-        problem: 
+        problem:
           "농장 장비와의 실시간 통신을 위해 MQTT 프로토콜을 활용해야 했고, 장비 명령 전송 중 실패 케이스에 대한 대응 로직이 필요했습니다.",
         solutions: [
           "MQTT 브릿지 서버와의 통신을 구현하여 장비 제어 기능 개발",
@@ -760,7 +748,7 @@ export const projects = [
         ],
       },
       {
-        problem: 
+        problem:
           "스마트팜의 일 단위 데이터를 효율적으로 관리하고 CSV 파일로 내보내는 기능이 필요했습니다.",
         solutions: [
           "일 단위 데이터 조회 기능을 추가하여 CSV로 내보내는 기능 구현",
@@ -772,7 +760,7 @@ export const projects = [
         ],
       },
       {
-        problem: 
+        problem:
           "관리자용 파일 업로드 기능을 추가해야 했고, 이를 통해 게시판의 관리 기능을 제공해야 했습니다.",
         solutions: [
           "관리자가 파일을 업로드할 수 있는 UI와 기능을 개발",
@@ -784,7 +772,7 @@ export const projects = [
         ],
       },
       {
-        problem: 
+        problem:
           "스마트팜의 네이버 클라우드 서버 29대의 하드웨어 스펙을 효율적으로 관리해야 했습니다.",
         solutions: [
           "클라우드 서버 하드웨어 스펙 정보를 정리하고 관리할 수 있는 UI 및 기능 구현",
@@ -813,29 +801,20 @@ export const projects = [
         "클라우드 서버의 하드웨어 스펙 관리를 통해 하드웨어 리소스에 대한 명확한 가시성 확보",
       ],
     },
-    github: "https://github.com/hansolbangul/farm-os",
-    demo: "https://farm-os.co.kr",
-    thumbnail: "/images/farmos-thumbnail.png",
-    images: [
-      "/images/farmos-1.png",
-      "/images/farmos-2.png",
-      "/images/farmos-3.png",
-    ],
-  },{
+  },
+  {
     id: 10,
     title: "FarmOS 홈페이지",
     description:
       "FarmOS 사업본부의 공식 홈페이지로, 사용자와 관리자를 위한 인터페이스를 제공하는 반응형 웹 애플리케이션입니다. 파일 업로드를 통한 게시판 기능과 관리자에게 메일을 전송하는 기능을 구현하여 관리 효율성을 향상시켰습니다.",
     period: "2022.01 - 2022.02",
     team: "지농",
-    role: "개발자",
+    role: "풀스택 개발자",
     techStack: {
       개발: ["React", "Recoil", "Node.js", "Express", "nodemailer"],
-      프론트엔드: [],
-      백엔드: [],
-      개발도구: ["GitHub"],
-      모바일: [],
       테스트: [],
+      개발도구: ["GitLab"],
+      모바일: [],
       모니터링: [],
     },
     features: [
@@ -846,7 +825,7 @@ export const projects = [
     ],
     challenges: [
       {
-        problem: 
+        problem:
           "웹과 모바일을 모두 지원하는 반응형 웹사이트를 개발해야 했습니다.",
         solutions: [
           "CSS 미디어 쿼리를 활용하여 다양한 디바이스 해상도에 대응",
@@ -858,7 +837,7 @@ export const projects = [
         ],
       },
       {
-        problem: 
+        problem:
           "관리자가 메일을 즉시 수신할 수 있는 안정적인 메일 전송 기능이 필요했습니다.",
         solutions: [
           "nodemailer 라이브러리를 활용하여 SMTP 서버를 통해 관리자 메일 전송 기능 구현",
@@ -870,8 +849,8 @@ export const projects = [
         ],
       },
       {
-        problem: 
-          "관리자가 파일을 업로드하고 사용자와 소통할 수 있는 게시판 기능이 필요했습니다.",
+        problem:
+          "관리자용 파일 업로드 기능을 추가해야 했고, 이를 통해 게시판의 관리 기능을 제공해야 했습니다.",
         solutions: [
           "파일 업로드 및 CRUD 기능이 포함된 게시판 개발",
           "Recoil을 사용하여 게시판 상태를 관리하고 사용자 인터페이스를 동적 변경",
@@ -895,81 +874,13 @@ export const projects = [
         "파일 업로드 및 게시판 기능을 통해 관리자와 사용자의 소통 채널을 확립",
       ],
     },
-    github: "https://github.com/hansolbangul/farm-os-website",
-    demo: "https://farm-os.co.kr",
-    thumbnail: "/images/farmos-website-thumbnail.png",
+    demo: "https://farmos.co.kr/",
+    thumbnail: "/videos/farmos-video.mp4",
     images: [
-      "/images/farmos-website-1.png",
-      "/images/farmos-website-2.png",
-      "/images/farmos-website-3.png",
-    ],
-  },{
-    id: 11,
-    title: "LMS 서비스 API 개발",
-    description:
-      "국가 사업의 LMS(Learning Management System) 플랫폼을 위한 API 서버 개발 프로젝트로, 커뮤니티, 메일 전송, 문자 전송 솔루션을 구축하여 멘토와 멘티 간의 소통을 지원했습니다. 총 90개의 API를 개발하고, JWT를 활용한 로그인 페이지를 Next.js로 구현했습니다.",
-    period: "2022.04 - 2022.06",
-    team: "크리액션",
-    role: "백엔드 개발자",
-    techStack: {
-      개발: ["Node.js", "Express", "Next.js", "JWT"],
-      프론트엔드: [],
-      백엔드: [],
-      개발도구: ["GitHub"],
-      모바일: [],
-      테스트: [],
-      모니터링: [],
-    },
-    features: [
-      "국가 사업의 LMS 플랫폼을 위한 API 서버 개발",
-      "90개의 API 개발 및 RESTful API 엔드포인트 설계",
-      "JWT를 활용한 로그인 페이지 개발 및 인증 시스템 구축",
-      "커뮤니티, 메일 전송, 문자 전송 솔루션을 활용하여 멘토-멘티 간 소통 시스템 구현",
-    ],
-    challenges: [
-      {
-        problem: 
-          "멘토와 멘티 간의 원활한 소통을 위해 커뮤니티 기능을 구현해야 했습니다.",
-        solutions: [
-          "커뮤니티 API 개발을 통해 사용자 간의 게시글 작성, 댓글, 좋아요 기능을 추가",
-          "멘토와 멘티의 소통을 원활히 하기 위해 메일 및 문자 전송 기능을 추가",
-        ],
-        learned: [
-          "커뮤니티 API 개발 및 사용자 간 소통을 위한 솔루션 설계 능력 습득",
-          "메일 및 문자 전송 솔루션의 연동 및 메시지 전송 실패에 대응하는 에러 핸들링 학습",
-        ],
-      },
-      {
-        problem: 
-          "JWT 인증을 통해 로그인 페이지를 개발해야 했고, 보안과 유저 세션 관리를 고려해야 했습니다.",
-        solutions: [
-          "JWT를 활용하여 로그인 및 인증 시스템 개발",
-          "Next.js의 getServerSideProps를 활용해 로그인 정보를 서버 측에서 관리",
-        ],
-        learned: [
-          "JWT 기반 인증 및 로그인 시스템 개발에 대한 실무 경험",
-          "Next.js에서 getServerSideProps를 활용한 서버 사이드 인증 로직 구현 능력 향상",
-        ],
-      },
-    ],
-    outcome: {
-      achievements: [
-        "LMS 플랫폼용 90개의 API 개발 및 커뮤니티 기능 구현",
-        "JWT 인증을 활용한 로그인 시스템 개발로 보안 강화",
-        "멘토와 멘티 간의 메일 및 문자 전송 기능 구현",
-      ],
-      improvements: [
-        "90개 API의 효율적 설계로 API 호출 성능 개선",
-        "커뮤니티 기능 및 멘토-멘티 소통 시스템을 통해 사용자 경험 개선",
-      ],
-    },
-    github: "https://github.com/hansolbangul/lms-api",
-    demo: "https://lms-api.co.kr",
-    thumbnail: "/images/lms-api-thumbnail.png",
-    images: [
-      "/images/lms-api-1.png",
-      "/images/lms-api-2.png",
-      "/images/lms-api-3.png",
+      "/images/farmos/farmos-1.png",
+      "/images/farmos/farmos-2.png",
+      "/images/farmos/farmos-3.png",
+      "/images/farmos/farmos-4.png",
     ],
   },
 ];
