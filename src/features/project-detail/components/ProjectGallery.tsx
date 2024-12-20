@@ -54,7 +54,7 @@ export default function ProjectGallery({ project }: ProjectGalleryProps) {
                   src={image}
                   alt={`${project.title} screenshot ${index + 1}`}
                   fill
-                  className="object-cover"
+                  className="object-contain"
                 />
               </SwiperSlide>
             ))}

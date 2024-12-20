@@ -270,9 +270,13 @@ export const projects = [
     demo: "https://cart.medicube.co.kr",
     thumbnail: "/videos/cart-medicube-video.mp4",
     images: [
-      "/images/medicube-1.png",
-      "/images/medicube-2.png",
-      "/images/medicube-3.png",
+      "/images/cart-medicube/cart-medicube-1.png",
+      "/images/cart-medicube/cart-medicube-2.png",
+      "/images/cart-medicube/cart-medicube-3.png",
+      "/images/cart-medicube/cart-medicube-4.png",
+      "/images/cart-medicube/cart-medicube-5.png",
+      "/images/cart-medicube/cart-medicube-6.png",
+      "/images/cart-medicube/cart-medicube-7.png",
     ],
   },{
     id: 4,

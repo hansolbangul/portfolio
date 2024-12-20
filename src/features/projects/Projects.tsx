@@ -38,7 +38,7 @@ const Projects = () => {
                       src={project.images?.[0] || "/projects/default-thumbnail.jpg"}
                       alt={project.title}
                       fill
-                      className="object-cover"
+                      className="object-contain"
                     />
                   </div>
                 </HoverScale>
