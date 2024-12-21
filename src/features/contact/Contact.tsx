@@ -42,8 +42,9 @@ const Contact = () => {
     <section id="contact" className="min-h-screen relative overflow-hidden">
       <div className="max-w-6xl mx-auto px-4 py-20">
         <ScrollReveal>
-          <h2 className="text-4xl font-bold mb-12 text-gray-800 dark:text-white">
-            Contact Me
+          <h2 className="text-4xl font-bold mb-12 text-gray-800 dark:text-white flex items-center justify-center gap-4">
+            <FaEnvelope className="text-red-600 dark:text-red-400" />
+            Contact
           </h2>
         </ScrollReveal>
 

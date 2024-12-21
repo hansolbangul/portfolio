@@ -11,6 +11,7 @@ import {
   FaCalendar,
   FaBuilding,
 } from "react-icons/fa";
+import { TypeAnimation } from "react-type-animation";
 
 const introductions = [
   {
@@ -116,15 +117,25 @@ export default function About() {
             >
               About Me
             </motion.h2>
-            <motion.p
-              initial={{ y: 20, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="text-lg text-gray-800 dark:text-gray-300"
-            >
-              혁신적인 개발자 경험을 만들어가는 소프트웨어 엔지니어입니다.
-            </motion.p>
+            <div className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8">
+              <TypeAnimation
+                style={{
+                  fontWeight: 700,
+                }}
+                sequence={[
+                  "혁신적인 개발자 경험을 만들어가는 소프트웨어 엔지니어입니다.",
+                  2000,
+                  "개발자 경험을 중시하는 DX 개발자입니다.",
+                  2000,
+                  "유저의 피드백으로 성장하는 애자일한 개발자입니다.",
+                  2000,
+                ]}
+                wrapper="span"
+                speed={50}
+                repeat={Infinity}
+                className="font-medium"
+              />
+            </div>
           </div>
         </div>
 
@@ -178,10 +189,10 @@ export default function About() {
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="text-4xl font-bold mb-12 text-gray-800 dark:text-white flex items-center gap-4"
+            className="text-4xl font-bold mb-12 text-gray-800 dark:text-white flex items-center justify-center gap-4"
           >
-            <FaBriefcase className="text-purple-600 dark:text-purple-400" />
-            Work Experience
+            <FaUsers className="text-green-600 dark:text-green-400" />
+            About Me
           </motion.h2>
 
           <div className="space-y-12">

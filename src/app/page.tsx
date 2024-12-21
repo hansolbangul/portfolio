@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Hero from "@/features/home/components/Hero";
 import About from "@/features/about/About";
 import Projects from "@/features/projects/Projects";
+import Experiences from "@/features/experiences/Experiences";
 import Contact from "@/features/contact/Contact";
 import FloatingGameButton from "@/features/games/components/FloatingGameButton";
 import ScrollProgress from "@/shared/components/layout/ScrollProgress";
@@ -43,6 +44,7 @@ export default function Home() {
       <Hero />
       <About />
       <Projects />
+      <Experiences />
       <Contact />
       <FloatingGameButton />
     </main>
