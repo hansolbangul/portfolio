@@ -134,15 +134,15 @@ export const FinanceBar = () => {
               >
                 <div className="flex items-center gap-2">
                   {getCryptoIcon(id)}
-                  <span className="font-medium text-sm">
+                  <span className="font-medium text-sm text-gray-900 dark:text-gray-100">
                     {id.charAt(0).toUpperCase() + id.slice(1)}
                   </span>
-                  <span className="font-medium text-sm">
+                  <span className="font-medium text-sm text-gray-900 dark:text-gray-100">
                     ${data.usd.toLocaleString()}
                   </span>
                   <span
                     className={`text-xs ${
-                      change >= 0 ? "text-green-500" : "text-red-500"
+                      change <= 0 ? "text-blue-500" : "text-red-500"
                     }`}
                   >
                     ({change?.toFixed(2)}%)

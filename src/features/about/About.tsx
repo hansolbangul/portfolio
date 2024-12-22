@@ -10,8 +10,11 @@ import {
   FaBriefcase,
   FaCalendar,
   FaBuilding,
+  FaUser,
 } from "react-icons/fa";
 import { TypeAnimation } from "react-type-animation";
+import { SectionLayout } from "@/shared/components/layout/SectionLayout";
+import { IconType } from "react-icons";
 
 const introductions = [
   {
@@ -35,30 +38,45 @@ const workExperience = [
   {
     company: "에이피알",
     position: "Frontend Engineer",
-    period: "2023.04 - 현재",
+    period: "2023.07 - 현재",
     description:
       "메디큐브/포맨트 도산 스토어 장바구니 웹앱, 메디큐브 피부진단 서비스, 포토그레이 웹앱/어드민 등 다수의 프로젝트를 성공적으로 완수했습니다. 프론트엔드 개발 환경 개선과 코드 품질 향상에 주력했습니다.",
     achievements: [
-      "Next.js, TypeScript 기반의 웹 애플리케이션 개발",
-      "서버리스 아키텍처 설계 및 구현",
-      "프론트엔드 성능 최적화 및 사용자 경험 개선",
+      "에이피알 포토그레이 전반적인 웹 프론트엔드 개발을 담당.",
+      "비즈니스 로직과 뷰 로직, 중복된 코드 분리 등의 리팩터링을 주도적으로 담당.",
+      "Jest, Cypress등 코드의 퀄리티를 높이는 작업을 진행.",
+      "코드리뷰, Frontend 스터디를 주도적으로 운영.",
     ],
   },
   {
-    company: "팜오에스",
+    company: "에임드",
+    position: "Frontend Engineer",
+    period: "2022.06 - 2023.07",
+    description:
+      "레거시 코드 마이그레이션 TF팀의 프론트엔드 리드를 맡아 성공적으로 프로젝트를 완수했습니다. 코드 리뷰 문화를 도입하고 팀의 기술적 성장을 이끌었으며, 웹 성능 최적화를 통해 사용자 경험을 크게 개선했습니다.",
+    achievements: [
+      "외주사 레거시 코드를 내제화하는 마이그레이션 TF 팀 FE 리드를 담당.",
+      "비동기 호출을 통해 웹 뷰의 로드 시간 등 속도 개선 작업을 담당.",
+      "코드리뷰 문화를 도입하며 사내 기술 증진을 적극적으로 장려.",
+      "팀원의 일정관리 및 업무 스케줄을 조율.",
+    ],
+  },
+  {
+    company: "지농",
     position: "Frontend/Backend Engineer",
-    period: "2022.07 - 2023.02",
+    period: "2021.07 - 2022.05",
     description:
       "스마트팜 제어 시스템 개발 및 회사 홈페이지 구축을 담당했습니다. 풀스택 개발자로서 프론트엔드와 백엔드를 아우르는 개발 경험을 쌓았습니다.",
     achievements: [
-      "Vue.js, Node.js 기반의 실시간 모니터링 시스템 개발",
-      "MQTT 프로토콜을 활용한 IoT 디바이스 제어 시스템 구현",
-      "반응형 웹 디자인 및 UI/UX 개선",
+      "스마트팜 솔루션 서비스 개발의 서브역할을 담당.",
+      "node와 vue를 활용한 웹 풀스택 개발을 진행.",
+      "농장 별 네이버 클라우드 서버 29대를 직접 관리.",
+      "서버의 상태 알림, 농장 상태 알림 등의 자동화 서비스 구현.",
     ],
   },
 ];
 
-export default function About() {
+const About = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -69,7 +87,7 @@ export default function About() {
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
   return (
-    <section ref={containerRef} className="py-20 px-4 md:px-8 relative">
+    <SectionLayout title="About Me" icon={FaUser}>
       <motion.div
         className="max-w-6xl mx-auto"
         initial={{ opacity: 0 }}
@@ -184,17 +202,6 @@ export default function About() {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <motion.h2
-            initial={{ y: 20, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-4xl font-bold mb-12 text-gray-800 dark:text-white flex items-center justify-center gap-4"
-          >
-            <FaUsers className="text-green-600 dark:text-green-400" />
-            About Me
-          </motion.h2>
-
           <div className="space-y-12">
             {workExperience.map((work, index) => (
               <motion.div
@@ -248,6 +255,8 @@ export default function About() {
           </div>
         </motion.div>
       </motion.div>
-    </section>
+    </SectionLayout>
   );
-}
+};
+
+export default About;

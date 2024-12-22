@@ -2,10 +2,10 @@ import { Metadata } from "next";
 import Hero from "@/features/home/components/Hero";
 import About from "@/features/about/About";
 import Projects from "@/features/projects/Projects";
-import Experiences from "@/features/experiences/Experiences";
 import Contact from "@/features/contact/Contact";
 import FloatingGameButton from "@/features/games/components/FloatingGameButton";
 import ScrollProgress from "@/shared/components/layout/ScrollProgress";
+import Experiences from "@/features/experiences/Experiences";
 
 export const metadata: Metadata = {
   title: "지한솔 | 프론트엔드 개발자",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main className="relative">
+    <main className="min-h-screen">
       <ScrollProgress />
       <Hero />
       <About />

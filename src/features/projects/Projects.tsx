@@ -2,26 +2,21 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { FaGithub, FaExternalLinkAlt, FaRocket } from "react-icons/fa";
+import { FaCode, FaGithub, FaExternalLinkAlt, FaRocket } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { projects } from "@/data/projects";
 import type { ValidatedProject } from "@/data/projects";
 import ScrollReveal from "@/shared/components/animations/motion/ScrollReveal";
 import HoverScale from "@/shared/components/animations/motion/HoverScale";
+import { SectionLayout } from "@/shared/components/layout/SectionLayout";
+import { IconType } from "react-icons";
 
 const Projects = () => {
   const router = useRouter();
 
   return (
-    <section id="projects" className="py-20 px-4 md:px-8">
+    <SectionLayout title="Projects" icon={FaCode}>
       <div className="max-w-6xl mx-auto">
-        <ScrollReveal>
-          <h2 className="text-4xl font-bold mb-12 text-gray-800 dark:text-white flex items-center justify-center gap-4">
-            <FaRocket className="text-blue-600 dark:text-blue-400" />
-            Projects
-          </h2>
-        </ScrollReveal>
-
         <div className="space-y-16">
           {projects.map((project: ValidatedProject, i) => (
             <ScrollReveal key={project.title} delay={i * 0.2}>
@@ -40,7 +35,7 @@ const Projects = () => {
                         src={project.images[0]}
                         alt={project.title}
                         fill
-                        className="object-contain"
+                        className="object-cover"
                       />
                     ) : (
                       <div className="h-full w-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
@@ -116,7 +111,7 @@ const Projects = () => {
           ))}
         </div>
       </div>
-    </section>
+    </SectionLayout>
   );
 };
 
