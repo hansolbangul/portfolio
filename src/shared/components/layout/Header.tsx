@@ -62,6 +62,18 @@ export default function Header() {
     return activeSection === href;
   };
 
+  const scrollToSection = (href: string) => {
+    const sectionId = href.replace("/#", "");
+    if (sectionId === "/") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
+
   return (
     <header
       className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md
@@ -99,6 +111,10 @@ export default function Header() {
                   <Link
                     key={item.href}
                     href={item.href}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToSection(item.href);
+                    }}
                     className={`relative px-3 py-2 transition-colors duration-200 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white ${
                       isActive(item.href)
                         ? "text-gray-800 dark:text-white font-medium"
@@ -149,7 +165,11 @@ export default function Header() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    onClick={() => setIsOpen(false)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsOpen(false);
+                      scrollToSection(item.href);
+                    }}
                     className={`block px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white ${
                       isActive(item.href)
                         ? "text-gray-800 dark:text-white font-medium"

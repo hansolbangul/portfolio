@@ -36,6 +36,7 @@ export default function Hero() {
   return (
     <motion.section
       ref={containerRef}
+      id="home"
       className="h-screen flex items-center justify-center relative"
       style={{ y, opacity }}
     >

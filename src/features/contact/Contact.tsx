@@ -40,29 +40,27 @@ const contactLinks = [
 
 const Contact = () => {
   return (
-    <SectionLayout title="Contact" icon={FaEnvelope}>
-      <section id="contact" className="min-h-screen relative overflow-hidden">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {contactLinks.map((link) => (
-              <HoverScale key={link.name}>
-                <a
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex flex-col items-center p-8 rounded-xl bg-white dark:bg-gray-800 
+    <SectionLayout title="Contact" icon={FaEnvelope} id="contact">
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {contactLinks.map((link) => (
+            <HoverScale key={link.name}>
+              <a
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex flex-col items-center p-8 rounded-xl bg-white dark:bg-gray-800 
                   shadow-lg hover:shadow-xl transition-all"
-                >
-                  {link.icon()}
-                  <span className="mt-4 font-medium text-gray-800 dark:text-white">
-                    {link.name}
-                  </span>
-                </a>
-              </HoverScale>
-            ))}
-          </div>
+              >
+                {link.icon()}
+                <span className="mt-4 font-medium text-gray-800 dark:text-white">
+                  {link.name}
+                </span>
+              </a>
+            </HoverScale>
+          ))}
         </div>
-      </section>
+      </div>
     </SectionLayout>
   );
 };

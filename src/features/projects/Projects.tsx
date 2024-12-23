@@ -15,7 +15,7 @@ const Projects = () => {
   const router = useRouter();
 
   return (
-    <SectionLayout title="Projects" icon={FaCode}>
+    <SectionLayout title="Projects" icon={FaCode} id="projects">
       <div className="max-w-6xl mx-auto">
         <div className="space-y-16">
           {projects.map((project: ValidatedProject, i) => (

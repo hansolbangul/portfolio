@@ -4,15 +4,17 @@ interface SectionLayoutProps {
   title: string;
   icon: IconType;
   children: React.ReactNode;
+  id?: string;
 }
 
 export const SectionLayout = ({
   title,
   icon: Icon,
   children,
+  id,
 }: SectionLayoutProps) => {
   return (
-    <section className="py-20 px-4 md:px-8">
+    <section id={id} className="py-20 px-4 md:px-8">
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center gap-4 mb-12">
           <div className="w-12 h-12 flex items-center justify-center rounded-xl bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800">
