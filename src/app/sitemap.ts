@@ -1,12 +1,12 @@
 import { MetadataRoute } from 'next'
 import { projects } from '@/data/projects'
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // 기본 URL
-  const baseUrl = 'https://hansolbangul.com'
+  const baseUrl = 'https://profile.hansolbangul.com'
 
   // 정적 라우트
-  const routes = [
+  const staticRoutes = [
     {
       url: baseUrl,
       lastModified: new Date(),
@@ -23,5 +23,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }))
 
-  return [...routes, ...projectRoutes]
+  return [...staticRoutes, ...projectRoutes]
 }
