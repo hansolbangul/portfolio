@@ -17,9 +17,9 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
 import Image from "next/image";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { FaBriefcase } from "react-icons/fa";
+import { FaBriefcase, FaChevronRight } from "react-icons/fa";
 
 type Experience = {
   title: string;
@@ -340,6 +340,33 @@ function EducationCard({
 }
 
 export default function Experiences() {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [showScrollIndicator, setShowScrollIndicator] = useState(false);
+
+  useEffect(() => {
+    const checkScroll = () => {
+      if (!scrollContainerRef.current) return;
+      const { scrollWidth, scrollLeft, clientWidth } = scrollContainerRef.current;
+      setShowScrollIndicator(scrollWidth - (scrollLeft + clientWidth) > 20);
+    };
+
+    const scrollContainer = scrollContainerRef.current;
+    if (scrollContainer) {
+      scrollContainer.addEventListener('scroll', checkScroll);
+      // 초기 체크
+      checkScroll();
+      // 리사이즈 시에도 체크
+      window.addEventListener('resize', checkScroll);
+    }
+
+    return () => {
+      if (scrollContainer) {
+        scrollContainer.removeEventListener('scroll', checkScroll);
+      }
+      window.removeEventListener('resize', checkScroll);
+    };
+  }, []);
+
   return (
     <SectionLayout
       id="experiences"
@@ -350,11 +377,32 @@ export default function Experiences() {
         <div className="space-y-6">
           <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">Work Experience</h3>
           <div className="relative">
-            <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
+            <div 
+              ref={scrollContainerRef}
+              className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide"
+            >
               {experiences.map((experience, index) => (
                 <ExperienceCard key={experience.title} experience={experience} index={index} />
               ))}
             </div>
+            {showScrollIndicator && (
+              <motion.div
+                initial={{ scale: 0.8 }}
+                animate={{ scale: 1.2 }}
+                transition={{ 
+                  duration: .8,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                  ease: "easeInOut"
+                }}
+                className="absolute right-4 top-1/2 z-10 -translate-y-1/2 text-3xl text-purple-500 dark:text-purple-400 sm:right-8"
+              >
+                <div className="flex items-center">
+                  <FaChevronRight />
+                  <FaChevronRight />
+                </div>
+              </motion.div>
+            )}
           </div>
         </div>
 
