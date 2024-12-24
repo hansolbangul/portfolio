@@ -9,9 +9,9 @@ import ProjectGallery from "@/features/project-detail/components/ProjectGallery"
 import { notFound } from "next/navigation";
 
 interface Props {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
