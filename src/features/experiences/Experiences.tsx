@@ -171,17 +171,72 @@ function ExperienceCard({
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       viewport={{ once: true }}
-      className="w-full rounded-lg bg-white p-6 shadow-lg dark:bg-zinc-800 md:p-8"
+      className="group relative h-full w-[300px] shrink-0 overflow-hidden rounded-2xl bg-gradient-to-br from-white to-white/80 shadow-lg transition-all hover:shadow-xl dark:from-zinc-800 dark:to-zinc-800/80 sm:w-[350px] md:w-[400px]"
     >
-      <div className="flex flex-col gap-4">
-        <div className="flex items-start justify-between gap-4">
+      <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100 dark:to-white/5" />
+      
+      {images && images.length > 0 ? (
+        <div className="relative h-56 w-full overflow-hidden">
+          <Swiper
+            effect="coverflow"
+            grabCursor={true}
+            centeredSlides={true}
+            slidesPerView={1}
+            coverflowEffect={{
+              rotate: 50,
+              stretch: 0,
+              depth: 100,
+              modifier: 1,
+              slideShadows: false,
+            }}
+            pagination={{
+              clickable: true,
+              el: '.swiper-pagination',
+              type: 'bullets',
+            }}
+            navigation={true}
+            modules={[EffectCoverflow, Pagination, Navigation]}
+            className="h-full w-full"
+          >
+            {images.map((image, i) => (
+              <SwiperSlide key={i}>
+                <div className="relative h-full w-full">
+                  <Image
+                    src={image}
+                    alt={`${title} 이미지 ${i + 1}`}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 640px) 300px, (max-width: 768px) 350px, 400px"
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
+            <div className="absolute bottom-4 z-10 w-full">
+              <div className="swiper-pagination !relative" />
+            </div>
+          </Swiper>
+        </div>
+      ) : (
+        <div className={`relative flex h-56 w-full items-center justify-center ${
+          color === "blue"
+            ? "bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400"
+            : color === "green"
+            ? "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400"
+            : "bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400"
+        }`}>
+          <span className="text-4xl opacity-50">{icon}</span>
+        </div>
+      )}
+
+      <div className="relative flex flex-col gap-4 p-6">
+        <div className="flex items-start gap-4">
           <div className="flex-1">
-            <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 md:text-xl">
+            <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">
               {title}
             </h3>
-            <div className="mt-1 flex flex-col gap-1 text-sm text-zinc-500 dark:text-zinc-400 md:flex-row md:items-center md:gap-2">
+            <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-zinc-500 dark:text-zinc-400">
               <span>{organization}</span>
-              <span className="hidden md:inline">•</span>
+              <span>•</span>
               <span>{period}</span>
             </div>
           </div>
@@ -198,52 +253,16 @@ function ExperienceCard({
           </div>
         </div>
 
-        <p className="text-sm text-zinc-600 dark:text-zinc-300 md:text-base">{description}</p>
+        <p className="text-sm text-zinc-600 dark:text-zinc-300">{description}</p>
 
-        <ul className="ml-4 list-disc space-y-1 text-sm text-zinc-600 dark:text-zinc-300 md:text-base">
-          {achievements.map((achievement, i) => (
-            <li key={i}>{achievement}</li>
-          ))}
-        </ul>
-
-        {images && images.length > 0 && (
-          <div className="mt-4">
-            <Swiper
-              effect="coverflow"
-              grabCursor={true}
-              centeredSlides={true}
-              slidesPerView="auto"
-              coverflowEffect={{
-                rotate: 50,
-                stretch: 0,
-                depth: 100,
-                modifier: 1,
-                slideShadows: false,
-              }}
-              pagination={{ clickable: true }}
-              navigation={true}
-              modules={[EffectCoverflow, Pagination, Navigation]}
-              className="w-full"
-            >
-              {images.map((image, i) => (
-                <SwiperSlide
-                  key={i}
-                  className="!w-[280px] md:!w-[320px]"
-                >
-                  <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg">
-                    <Image
-                      src={image}
-                      alt={`${title} 이미지 ${i + 1}`}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 280px, 320px"
-                    />
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-        )}
+        <div className="space-y-2 rounded-xl bg-zinc-50 p-4 dark:bg-zinc-900/50">
+          <h4 className="font-medium text-zinc-900 dark:text-zinc-100">주요 성과</h4>
+          <ul className="ml-4 list-disc space-y-1 text-sm text-zinc-600 dark:text-zinc-300">
+            {achievements.map((achievement, i) => (
+              <li key={i}>{achievement}</li>
+            ))}
+          </ul>
+        </div>
       </div>
     </motion.div>
   );
@@ -326,19 +345,20 @@ export default function Experiences() {
       id="experiences"
       title="Experiences"
       icon={FaBriefcase}
-      className="scroll-mt-24"
     >
-      <div className="grid grid-cols-1 gap-6 md:gap-8">
-        <div className="space-y-6 md:space-y-8">
+      <div className="space-y-12">
+        <div className="space-y-6">
           <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">Work Experience</h3>
-          <div className="grid grid-cols-1 gap-6 md:gap-8">
-            {experiences.map((experience, index) => (
-              <ExperienceCard key={experience.title} experience={experience} index={index} />
-            ))}
+          <div className="relative">
+            <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
+              {experiences.map((experience, index) => (
+                <ExperienceCard key={experience.title} experience={experience} index={index} />
+              ))}
+            </div>
           </div>
         </div>
 
-        <div className="space-y-6 md:space-y-8">
+        <div className="space-y-6">
           <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">Education</h3>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8">
             {educations.map((education, index) => (
