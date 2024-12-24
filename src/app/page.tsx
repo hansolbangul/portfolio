@@ -6,6 +6,7 @@ import Contact from "@/features/contact/Contact";
 import FloatingGameButton from "@/features/games/components/FloatingGameButton";
 import ScrollProgress from "@/shared/components/layout/ScrollProgress";
 import Experiences from "@/features/experiences/Experiences";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "지한솔 | 프론트엔드 개발자",
@@ -44,7 +45,9 @@ export default function Home() {
       <Hero />
       <About />
       <Projects />
-      <Experiences />
+      <Suspense fallback={null}>
+        <Experiences />
+      </Suspense>
       <Contact />
       <FloatingGameButton />
     </main>

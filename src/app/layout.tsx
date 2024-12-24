@@ -24,6 +24,7 @@ const geistMono = localFont({
 const queryClient = new QueryClient();
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://profile.hansolbangul.com'),
   title: "Hansolji - Portfolio",
   description: "Frontend Developer Portfolio",
 };

@@ -1,5 +1,14 @@
 import { motion } from "framer-motion";
 import { Education } from "@/data/experiences";
+import {
+  FaGraduationCap,
+  FaSchool,
+} from "react-icons/fa";
+
+const iconComponents = {
+  FaGraduationCap,
+  FaSchool,
+};
 
 interface EducationCardProps {
   education: Education;
@@ -8,6 +17,7 @@ interface EducationCardProps {
 
 export default function EducationCard({ education, index }: EducationCardProps) {
   const { school, location, degree, major, gpa, period, icon, color } = education;
+  const IconComponent = iconComponents[icon as keyof typeof iconComponents];
 
   return (
     <motion.div
@@ -27,7 +37,7 @@ export default function EducationCard({ education, index }: EducationCardProps) 
                 : "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400"
             }`}
           >
-            <span className="text-2xl md:text-3xl">{icon}</span>
+            {IconComponent && <IconComponent className="text-2xl md:text-3xl" />}
           </div>
           <div className="flex-1">
             <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 md:text-xl">

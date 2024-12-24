@@ -1,5 +1,20 @@
 import { motion } from "framer-motion";
 import { Experience } from "@/data/experiences";
+import {
+  FaBookReader,
+  FaChalkboardTeacher,
+  FaStore,
+} from "react-icons/fa";
+import { IoLibrary } from "react-icons/io5";
+import { MdScience } from "react-icons/md";
+
+const iconComponents = {
+  IoLibrary,
+  FaBookReader,
+  FaChalkboardTeacher,
+  FaStore,
+  MdScience,
+};
 
 interface ExperienceCardProps {
   experience: Experience;
@@ -7,6 +22,8 @@ interface ExperienceCardProps {
 }
 
 export default function ExperienceCard({ experience, index }: ExperienceCardProps) {
+  const IconComponent = iconComponents[experience.icon as keyof typeof iconComponents];
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -42,7 +59,7 @@ export default function ExperienceCard({ experience, index }: ExperienceCardProp
                 : "bg-pink-100 text-pink-600 dark:bg-pink-900/30 dark:text-pink-400"
             }`}
           >
-            {experience.icon}
+            {IconComponent && <IconComponent className="text-2xl" />}
           </div>
         </div>
 
