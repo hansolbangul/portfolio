@@ -196,10 +196,10 @@ function ExperienceCard({
             }}
             navigation={true}
             modules={[EffectCoverflow, Pagination, Navigation]}
-            className="h-full w-full"
+            className="!h-56 w-full"
           >
             {images.map((image, i) => (
-              <SwiperSlide key={i}>
+              <SwiperSlide key={i} className="!h-56">
                 <div className="relative h-full w-full">
                   <Image
                     src={image}
@@ -212,7 +212,7 @@ function ExperienceCard({
               </SwiperSlide>
             ))}
             <div className="absolute bottom-4 z-10 w-full">
-              <div className="swiper-pagination !relative" />
+              <div className="swiper-pagination !relative " />
             </div>
           </Swiper>
         </div>
@@ -381,9 +381,11 @@ export default function Experiences() {
               ref={scrollContainerRef}
               className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide"
             >
-              {experiences.map((experience, index) => (
-                <ExperienceCard key={experience.title} experience={experience} index={index} />
-              ))}
+              <div className="flex gap-4 items-stretch">
+                {experiences.map((experience, index) => (
+                  <ExperienceCard key={experience.title} experience={experience} index={index} />
+                ))}
+              </div>
             </div>
             {showScrollIndicator && (
               <motion.div
