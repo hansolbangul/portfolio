@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 
 interface ModalProps {
   isOpen: boolean;
@@ -9,6 +9,18 @@ interface ModalProps {
 }
 
 const Modal = ({ isOpen, onClose, children, width = 'max-w-2xl' }: ModalProps) => {
+  // 모달이 열릴 때 body 스크롤 방지
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -29,7 +41,7 @@ const Modal = ({ isOpen, onClose, children, width = 'max-w-2xl' }: ModalProps) =
           >
             {/* Modal Content */}
             <motion.div
-              className={`w-full ${width}`}
+              className={`w-full ${width} max-h-[90vh] overflow-y-auto`}
               initial={{ scale: 0.95, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.95, opacity: 0, y: 20 }}

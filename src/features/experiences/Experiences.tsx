@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter, useSearchParams } from "next/navigation";
 import { SectionLayout } from "@/shared/components/layout/SectionLayout";
 import {
   FaBookReader,
@@ -17,11 +18,13 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
 import Image from "next/image";
-import { useRef, useState, useEffect } from "react";
+import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { FaBriefcase, FaChevronRight } from "react-icons/fa";
+import { FaBriefcase } from "react-icons/fa";
+import Modal from "@/components/Modal";
 
 type Experience = {
+  id: string;
   title: string;
   organization: string;
   period: string;
@@ -34,6 +37,7 @@ type Experience = {
 
 const experiences: Experience[] = [
   {
+    id: "1",
     title: "FE 기술 블로그 커뮤니티 '우당탕탕 도서관' 운영",
     organization: "개인",
     period: "2024.01 - 2024.03",
@@ -56,6 +60,7 @@ const experiences: Experience[] = [
     color: "blue",
   },
   {
+    id: "2",
     title: "컴퓨터공학과 조교 & 조교장",
     organization: "성결대학교",
     period: "2017.04 - 2021.09",
@@ -70,6 +75,7 @@ const experiences: Experience[] = [
     color: "green",
   },
   {
+    id: "3",
     title: "자연어처리 연구 연구원",
     organization: "성결대학교 x 고려대학교",
     period: "2019.02 - 2019.09",
@@ -84,6 +90,7 @@ const experiences: Experience[] = [
     color: "purple",
   },
   {
+    id: "4",
     title: "스크래치 코딩 봉사 Tellus 동아리 초대 동아리장",
     organization: "라즈베리파이 재단 + 성결대학교",
     period: "2017.04 - 2019.09",
@@ -106,6 +113,7 @@ const experiences: Experience[] = [
     color: "yellow",
   },
   {
+    id: "5",
     title: "올리브영 직영/가맹점 근무",
     organization: "개인",
     period: "2019.07 - 2020.06",
@@ -155,116 +163,196 @@ const educations: Education[] = [
   },
 ];
 
-function ExperienceCard({
-  experience,
-  index,
-}: {
-  experience: Experience;
-  index: number;
-}) {
-  const { title, organization, period, description, achievements, icon, images, color } =
-    experience;
+export default function Experiences() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const experienceId = searchParams.get("experience");
+
+  const selectedExperience = experienceId 
+    ? experiences.find(exp => exp.id === experienceId)
+    : null;
+
+  const handleOpenModal = (id: string) => {
+    const currentUrl = new URL(window.location.href);
+    currentUrl.searchParams.set("experience", id);
+    router.push(currentUrl.pathname + currentUrl.search, { scroll: false });
+  };
+
+  const handleCloseModal = () => {
+    const currentUrl = new URL(window.location.href);
+    currentUrl.searchParams.delete("experience");
+    router.push(currentUrl.pathname + currentUrl.search, { scroll: false });
+  };
+
+  // URL에서 직접 접근했을 때 스크롤 위치 조정
+  useEffect(() => {
+    if (experienceId) {
+      const experiencesSection = document.getElementById("experiences");
+      experiencesSection?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [experienceId]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      viewport={{ once: true }}
-      className="group relative h-full w-[300px] shrink-0 overflow-hidden rounded-2xl bg-gradient-to-br from-white to-white/80 shadow-lg transition-all hover:shadow-xl dark:from-zinc-800 dark:to-zinc-800/80 sm:w-[350px] md:w-[400px]"
+    <SectionLayout
+      id="experiences"
+      title="Work Experience"
+      icon={FaBriefcase}
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100 dark:to-white/5" />
-      
-      {images && images.length > 0 ? (
-        <div className="relative h-56 w-full overflow-hidden">
-          <Swiper
-            effect="coverflow"
-            grabCursor={true}
-            centeredSlides={true}
-            slidesPerView={1}
-            coverflowEffect={{
-              rotate: 50,
-              stretch: 0,
-              depth: 100,
-              modifier: 1,
-              slideShadows: false,
-            }}
-            pagination={{
-              clickable: true,
-              el: '.swiper-pagination',
-              type: 'bullets',
-            }}
-            navigation={true}
-            modules={[EffectCoverflow, Pagination, Navigation]}
-            className="!h-56 w-full"
-          >
-            {images.map((image, i) => (
-              <SwiperSlide key={i} className="!h-56">
-                <div className="relative h-full w-full">
-                  <Image
-                    src={image}
-                    alt={`${title} 이미지 ${i + 1}`}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 640px) 300px, (max-width: 768px) 350px, 400px"
-                  />
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {experiences.map((experience, index) => (
+          <div key={experience.id} onClick={() => handleOpenModal(experience.id)}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="group relative h-full cursor-pointer overflow-hidden rounded-2xl bg-gradient-to-br from-white to-white/80 p-6 shadow-lg transition-all hover:shadow-xl dark:from-zinc-800 dark:to-zinc-800/80"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100 dark:to-white/5" />
+              
+              <div className="relative flex flex-col gap-4">
+                <div className="flex items-start gap-4">
+                  <div className="flex-1">
+                    <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">
+                      {experience.title}
+                    </h3>
+                    <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-zinc-500 dark:text-zinc-400">
+                      <span>{experience.organization}</span>
+                      <span>•</span>
+                      <span>{experience.period}</span>
+                    </div>
+                  </div>
+                  <div
+                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
+                      experience.color === "blue"
+                        ? "bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400"
+                        : experience.color === "green"
+                        ? "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400"
+                        : experience.color === "purple"
+                        ? "bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400"
+                        : experience.color === "yellow"
+                        ? "bg-yellow-100 text-yellow-600 dark:bg-yellow-900/30 dark:text-yellow-400"
+                        : "bg-pink-100 text-pink-600 dark:bg-pink-900/30 dark:text-pink-400"
+                    }`}
+                  >
+                    {experience.icon}
+                  </div>
                 </div>
-              </SwiperSlide>
-            ))}
-            <div className="absolute bottom-4 z-10 w-full">
-              <div className="swiper-pagination !relative " />
-            </div>
-          </Swiper>
-        </div>
-      ) : (
-        <div className={`relative flex h-56 w-full items-center justify-center ${
-          color === "blue"
-            ? "bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400"
-            : color === "green"
-            ? "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400"
-            : "bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400"
-        }`}>
-          <span className="text-4xl opacity-50">{icon}</span>
-        </div>
-      )}
 
-      <div className="relative flex flex-col gap-4 p-6">
-        <div className="flex items-start gap-4">
-          <div className="flex-1">
-            <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">
-              {title}
-            </h3>
-            <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-zinc-500 dark:text-zinc-400">
-              <span>{organization}</span>
-              <span>•</span>
-              <span>{period}</span>
-            </div>
+                <p className="line-clamp-3 text-sm text-zinc-600 dark:text-zinc-300">
+                  {experience.description}
+                </p>
+              </div>
+            </motion.div>
           </div>
-          <div
-            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
-              color === "blue"
-                ? "bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400"
-                : color === "green"
-                ? "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400"
-                : "bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400"
-            }`}
-          >
-            {icon}
-          </div>
-        </div>
+        ))}
+      </div>
 
-        <p className="text-sm text-zinc-600 dark:text-zinc-300">{description}</p>
-
-        <div className="space-y-2 rounded-xl bg-zinc-50 p-4 dark:bg-zinc-900/50">
-          <h4 className="font-medium text-zinc-900 dark:text-zinc-100">주요 성과</h4>
-          <ul className="ml-4 list-disc space-y-1 text-sm text-zinc-600 dark:text-zinc-300">
-            {achievements.map((achievement, i) => (
-              <li key={i}>{achievement}</li>
-            ))}
-          </ul>
+      <div className="mt-8">
+        <h3 className="mb-4 text-xl font-bold text-zinc-900 dark:text-zinc-100">
+          Education
+        </h3>
+        <div className="grid gap-4 md:grid-cols-2">
+          {educations.map((education, index) => (
+            <EducationCard key={index} education={education} index={index} />
+          ))}
         </div>
       </div>
-    </motion.div>
+
+      <Modal
+        isOpen={!!selectedExperience}
+        onClose={handleCloseModal}
+        width="max-w-3xl"
+      >
+        {selectedExperience && (
+          <div className="p-6">
+            <div className="mb-6 flex items-start justify-between">
+              <div>
+                <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+                  {selectedExperience.title}
+                </h2>
+                <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-zinc-500 dark:text-zinc-400">
+                  <span>{selectedExperience.organization}</span>
+                  <span>•</span>
+                  <span>{selectedExperience.period}</span>
+                </div>
+              </div>
+              <div
+                className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full ${
+                  selectedExperience.color === "blue"
+                    ? "bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400"
+                    : selectedExperience.color === "green"
+                    ? "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400"
+                    : selectedExperience.color === "purple"
+                    ? "bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400"
+                    : selectedExperience.color === "yellow"
+                    ? "bg-yellow-100 text-yellow-600 dark:bg-yellow-900/30 dark:text-yellow-400"
+                    : "bg-pink-100 text-pink-600 dark:bg-pink-900/30 dark:text-pink-400"
+                }`}
+              >
+                {selectedExperience.icon}
+              </div>
+            </div>
+
+            {selectedExperience.images && selectedExperience.images.length > 0 && (
+              <div className="mb-6 h-80 overflow-hidden rounded-xl">
+                <Swiper
+                  effect="coverflow"
+                  grabCursor={true}
+                  centeredSlides={true}
+                  slidesPerView={1}
+                  coverflowEffect={{
+                    rotate: 50,
+                    stretch: 0,
+                    depth: 100,
+                    modifier: 1,
+                    slideShadows: false,
+                  }}
+                  pagination={{
+                    clickable: true,
+                    el: '.swiper-pagination',
+                    type: 'bullets',
+                  }}
+                  navigation={true}
+                  modules={[EffectCoverflow, Pagination, Navigation]}
+                  className="!h-80 w-full"
+                >
+                  {selectedExperience.images.map((image, i) => (
+                    <SwiperSlide key={i} className="!h-80">
+                      <div className="relative h-full w-full">
+                        <Image
+                          src={image}
+                          alt={`${selectedExperience.title} 이미지 ${i + 1}`}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, 768px"
+                        />
+                      </div>
+                    </SwiperSlide>
+                  ))}
+                  <div className="absolute bottom-4 z-10 w-full">
+                    <div className="swiper-pagination !relative" />
+                  </div>
+                </Swiper>
+              </div>
+            )}
+
+            <p className="mb-6 text-zinc-600 dark:text-zinc-300">
+              {selectedExperience.description}
+            </p>
+
+            <div className="space-y-2 rounded-xl bg-zinc-50 p-4 dark:bg-zinc-900/50">
+              <h4 className="font-medium text-zinc-900 dark:text-zinc-100">주요 성과</h4>
+              <ul className="ml-4 list-disc space-y-1 text-zinc-600 dark:text-zinc-300">
+                {selectedExperience.achievements.map((achievement, i) => (
+                  <li key={i}>{achievement}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+      </Modal>
+    </SectionLayout>
   );
 }
 
@@ -336,87 +424,5 @@ function EducationCard({
         )}
       </div>
     </motion.div>
-  );
-}
-
-export default function Experiences() {
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [showScrollIndicator, setShowScrollIndicator] = useState(false);
-
-  useEffect(() => {
-    const checkScroll = () => {
-      if (!scrollContainerRef.current) return;
-      const { scrollWidth, scrollLeft, clientWidth } = scrollContainerRef.current;
-      setShowScrollIndicator(scrollWidth - (scrollLeft + clientWidth) > 20);
-    };
-
-    const scrollContainer = scrollContainerRef.current;
-    if (scrollContainer) {
-      scrollContainer.addEventListener('scroll', checkScroll);
-      // 초기 체크
-      checkScroll();
-      // 리사이즈 시에도 체크
-      window.addEventListener('resize', checkScroll);
-    }
-
-    return () => {
-      if (scrollContainer) {
-        scrollContainer.removeEventListener('scroll', checkScroll);
-      }
-      window.removeEventListener('resize', checkScroll);
-    };
-  }, []);
-
-  return (
-    <SectionLayout
-      id="experiences"
-      title="Experiences"
-      icon={FaBriefcase}
-    >
-      <div className="space-y-12">
-        <div className="space-y-6">
-          <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">Work Experience</h3>
-          <div className="relative">
-            <div 
-              ref={scrollContainerRef}
-              className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide"
-            >
-              <div className="flex gap-4 items-stretch">
-                {experiences.map((experience, index) => (
-                  <ExperienceCard key={experience.title} experience={experience} index={index} />
-                ))}
-              </div>
-            </div>
-            {showScrollIndicator && (
-              <motion.div
-                initial={{ scale: 0.8 }}
-                animate={{ scale: 1.2 }}
-                transition={{ 
-                  duration: .8,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                  ease: "easeInOut"
-                }}
-                className="absolute right-4 top-1/2 z-10 -translate-y-1/2 text-3xl text-purple-500 dark:text-purple-400 sm:right-8"
-              >
-                <div className="flex items-center">
-                  <FaChevronRight />
-                  <FaChevronRight />
-                </div>
-              </motion.div>
-            )}
-          </div>
-        </div>
-
-        <div className="space-y-6">
-          <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">Education</h3>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8">
-            {educations.map((education, index) => (
-              <EducationCard key={education.school} education={education} index={index} />
-            ))}
-          </div>
-        </div>
-      </div>
-    </SectionLayout>
   );
 }

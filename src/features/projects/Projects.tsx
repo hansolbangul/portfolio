@@ -22,7 +22,7 @@ const Projects = () => {
           {projects.map((project: ValidatedProject, i) => (
             <ScrollReveal key={project.title} delay={i * 0.1}>
               <motion.div
-                className="group relative bg-white dark:bg-gray-800/50 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl 
+                className="cursor-pointer group relative bg-white dark:bg-gray-800/50 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl 
                   transition-all duration-200 hover:-translate-y-2 break-inside-avoid mb-8 flex flex-col"
                 onClick={() => router.push(`/projects/${project.id}`)}
                 whileHover={{ scale: 1.02 }}
