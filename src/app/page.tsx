@@ -15,13 +15,13 @@ export const metadata: Metadata = {
     title: "지한솔 | 프론트엔드 개발자",
     description:
       "안녕하세요, 사용자 경험을 중요시하는 프론트엔드 개발자 지한솔입니다. 웹 개발 프로젝트와 기술 스택을 소개합니다.",
-    url: "https://hansolji.vercel.app",
+    url: "https://profile.hansolbangul.com",
     siteName: "지한솔 포트폴리오",
     locale: "ko_KR",
     type: "website",
     images: [
       {
-        url: "/images/og-image.png",
+        url: "/images/profile.jpeg",
         width: 1200,
         height: 630,
         alt: "지한솔 포트폴리오",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     title: "지한솔 | 프론트엔드 개발자",
     description:
       "안녕하세요, 사용자 경험을 중요시하는 프론트엔드 개발자 지한솔입니다. 웹 개발 프로젝트와 기술 스택을 소개합니다.",
-    images: ["/images/og-image.png"],
+    images: ["/images/profile.jpeg"],
   },
 };
 
