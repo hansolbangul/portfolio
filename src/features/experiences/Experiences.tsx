@@ -155,235 +155,198 @@ const educations: Education[] = [
   },
 ];
 
-type IconType = React.ReactNode;
-
-interface ExperiencesProps {
-  icon: IconType;
-}
-
-const ExperienceCard = ({
+function ExperienceCard({
   experience,
   index,
 }: {
   experience: Experience;
   index: number;
-}) => {
-  const getGradient = (color: string) => {
-    const gradients = {
-      blue: "from-blue-500 to-blue-600",
-      green: "from-green-500 to-green-600",
-      purple: "from-purple-500 to-purple-600",
-      yellow: "from-yellow-500 to-yellow-600",
-      pink: "from-pink-500 to-pink-600",
-    };
-    return (
-      gradients[color as keyof typeof gradients] || "from-gray-500 to-gray-600"
-    );
-  };
+}) {
+  const { title, organization, period, description, achievements, icon, images, color } =
+    experience;
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="w-[400px] h-full bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col"
+      viewport={{ once: true }}
+      className="w-full rounded-lg bg-white p-6 shadow-lg dark:bg-zinc-800 md:p-8"
     >
-      {experience.images ? (
-        <div className="h-64 relative rounded-t-xl overflow-hidden">
-          <Swiper
-            effect="coverflow"
-            grabCursor={true}
-            centeredSlides={true}
-            slidesPerView={1}
-            coverflowEffect={{
-              rotate: 50,
-              stretch: 0,
-              depth: 100,
-              modifier: 1,
-              slideShadows: true,
-            }}
-            pagination={{ clickable: true }}
-            navigation={true}
-            modules={[EffectCoverflow, Pagination, Navigation]}
-            className="w-full h-full"
-          >
-            {experience.images.map((image, i) => (
-              <SwiperSlide key={i}>
-                <div className="relative w-full h-full">
-                  <Image
-                    src={image}
-                    alt={`${experience.title} image ${i + 1}`}
-                    fill
-                    className="object-cover"
-                    sizes="400px"
-                  />
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
-      ) : (
-        <div
-          className={`h-64 relative rounded-t-xl overflow-hidden bg-gradient-to-br ${getGradient(
-            experience.color || "gray"
-          )}`}
-        >
-          <div className="absolute inset-0 flex items-center justify-center text-white">
-            <div className="text-6xl opacity-80">{experience.icon}</div>
-          </div>
-        </div>
-      )}
-      <div className="p-6 flex-1 flex flex-col">
-        <div className="flex items-start gap-4 mb-4">
-          <div
-            className={`p-2 rounded-lg bg-gradient-to-br ${getGradient(
-              experience.color || "gray"
-            )}`}
-          >
-            {experience.icon && (
-              <div className="text-white">{experience.icon}</div>
-            )}
-          </div>
-          <div>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-              {experience.title}
+      <div className="flex flex-col gap-4">
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex-1">
+            <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 md:text-xl">
+              {title}
             </h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              {experience.organization} | {experience.period}
-            </p>
+            <div className="mt-1 flex flex-col gap-1 text-sm text-zinc-500 dark:text-zinc-400 md:flex-row md:items-center md:gap-2">
+              <span>{organization}</span>
+              <span className="hidden md:inline">•</span>
+              <span>{period}</span>
+            </div>
+          </div>
+          <div
+            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
+              color === "blue"
+                ? "bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400"
+                : color === "green"
+                ? "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400"
+                : "bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400"
+            }`}
+          >
+            {icon}
           </div>
         </div>
-        <p className="text-gray-700 dark:text-gray-300 mb-4 flex-1">
-          {experience.description}
-        </p>
-        <ul className="list-disc list-inside space-y-2">
-          {experience.achievements.map((achievement, i) => (
-            <li key={i} className="text-gray-600 dark:text-gray-400 text-sm">
-              {achievement}
-            </li>
+
+        <p className="text-sm text-zinc-600 dark:text-zinc-300 md:text-base">{description}</p>
+
+        <ul className="ml-4 list-disc space-y-1 text-sm text-zinc-600 dark:text-zinc-300 md:text-base">
+          {achievements.map((achievement, i) => (
+            <li key={i}>{achievement}</li>
           ))}
         </ul>
+
+        {images && images.length > 0 && (
+          <div className="mt-4">
+            <Swiper
+              effect="coverflow"
+              grabCursor={true}
+              centeredSlides={true}
+              slidesPerView="auto"
+              coverflowEffect={{
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: false,
+              }}
+              pagination={{ clickable: true }}
+              navigation={true}
+              modules={[EffectCoverflow, Pagination, Navigation]}
+              className="w-full"
+            >
+              {images.map((image, i) => (
+                <SwiperSlide
+                  key={i}
+                  className="!w-[280px] md:!w-[320px]"
+                >
+                  <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg">
+                    <Image
+                      src={image}
+                      alt={`${title} 이미지 ${i + 1}`}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 280px, 320px"
+                    />
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+        )}
       </div>
     </motion.div>
   );
-};
+}
 
-const EducationCard = ({
+function EducationCard({
   education,
   index,
 }: {
   education: Education;
   index: number;
-}) => {
-  const getGradient = (color: string) => {
-    const gradients = {
-      blue: "from-blue-400/20 to-blue-500/20 dark:from-blue-400/10 dark:to-blue-500/10",
-      green:
-        "from-green-400/20 to-green-500/20 dark:from-green-400/10 dark:to-green-500/10",
-    };
-    return (
-      gradients[color as keyof typeof gradients] ||
-      "from-gray-400/20 to-gray-500/20"
-    );
-  };
-
-  const getIconColor = (color: string) => {
-    const colors = {
-      blue: "text-blue-500 dark:text-blue-400",
-      green: "text-green-500 dark:text-green-400",
-    };
-    return colors[color as keyof typeof colors] || "text-gray-500";
-  };
+}) {
+  const { school, location, degree, major, gpa, period, icon, color } = education;
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="relative w-[400px] bg-gradient-to-br backdrop-blur-sm bg-white/50 dark:bg-gray-800/50 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group"
+      viewport={{ once: true }}
+      className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-white to-white/80 p-6 shadow-lg transition-all hover:shadow-xl dark:from-zinc-800 dark:to-zinc-800/80 md:p-8"
     >
-      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
-      <div className="relative p-8">
-        <div className="flex items-start gap-6">
+      <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100 dark:to-white/5" />
+      <div className="relative flex flex-col gap-4">
+        <div className="flex items-start gap-4">
           <div
-            className={`flex-shrink-0 p-4 rounded-xl bg-gradient-to-br ${getGradient(
-              education.color
-            )}`}
+            className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl transition-colors md:h-14 md:w-14 ${
+              color === "blue"
+                ? "bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400"
+                : "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400"
+            }`}
           >
-            <div className={`text-3xl ${getIconColor(education.color)}`}>
-              {education.icon}
-            </div>
+            <span className="text-2xl md:text-3xl">{icon}</span>
           </div>
           <div className="flex-1">
-            <div className="flex items-center justify-between mb-2">
-              <h3 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
-                {education.school}
-              </h3>
-              <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                {education.period}
-              </span>
-            </div>
-            <p className="text-gray-600 dark:text-gray-300 font-medium mb-1">
-              {education.location}
-            </p>
-            {education.major && (
-              <div className="mt-4 space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-700 dark:text-gray-200">
-                    [{education.degree}] {education.major}
+            <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 md:text-xl">
+              {school}
+            </h3>
+            <div className="mt-2 flex flex-col gap-1 text-sm text-zinc-500 dark:text-zinc-400 md:text-base">
+              <div className="flex items-center gap-2">
+                <span>{location}</span>
+                <span>•</span>
+                <span>{period}</span>
+              </div>
+              {degree && (
+                <div className="flex items-center gap-2">
+                  <span className="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
+                    {degree}
                   </span>
-                  {education.gpa && (
-                    <span className="px-3 py-1 text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/30 rounded-full">
-                      GPA: {education.gpa}
-                    </span>
-                  )}
                 </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {(major || gpa) && (
+          <div className="mt-2 space-y-2 rounded-xl bg-zinc-50 p-4 text-sm dark:bg-zinc-900/50 md:text-base">
+            {major && (
+              <div className="flex items-center gap-2">
+                <span className="font-medium text-zinc-700 dark:text-zinc-300">전공:</span>
+                <span className="text-zinc-600 dark:text-zinc-400">{major}</span>
+              </div>
+            )}
+            {gpa && (
+              <div className="flex items-center gap-2">
+                <span className="font-medium text-zinc-700 dark:text-zinc-300">학점:</span>
+                <span className="text-zinc-600 dark:text-zinc-400">{gpa}</span>
               </div>
             )}
           </div>
-        </div>
+        )}
       </div>
     </motion.div>
   );
-};
+}
 
-const Experiences = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-
+export default function Experiences() {
   return (
-    <SectionLayout title="Experiences" icon={FaBriefcase}>
-      <div className="mb-16">
-        <h3 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-8">
-          Education
-        </h3>
-        <div className="flex gap-8 overflow-x-auto pb-4 scrollbar-hide">
-          {educations.map((education, index) => (
-            <EducationCard key={index} education={education} index={index} />
-          ))}
-        </div>
-      </div>
-
-      <div>
-        <h3 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-8">
-          Other Experience
-        </h3>
-        <div
-          ref={containerRef}
-          className="overflow-x-auto pb-8 -mx-4 px-4 scrollbar-hide"
-        >
-          <div className="flex gap-6 min-w-max">
+    <SectionLayout
+      id="experiences"
+      title="Experiences"
+      icon={FaBriefcase}
+      className="scroll-mt-24"
+    >
+      <div className="grid grid-cols-1 gap-6 md:gap-8">
+        <div className="space-y-6 md:space-y-8">
+          <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">Work Experience</h3>
+          <div className="grid grid-cols-1 gap-6 md:gap-8">
             {experiences.map((experience, index) => (
-              <ExperienceCard
-                key={index}
-                experience={experience}
-                index={index}
-              />
+              <ExperienceCard key={experience.title} experience={experience} index={index} />
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-6 md:space-y-8">
+          <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">Education</h3>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8">
+            {educations.map((education, index) => (
+              <EducationCard key={education.school} education={education} index={index} />
             ))}
           </div>
         </div>
       </div>
     </SectionLayout>
   );
-};
-
-export default Experiences;
+}
