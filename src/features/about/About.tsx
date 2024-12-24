@@ -126,29 +126,23 @@ const About = () => {
             />
           </motion.div>
           <div>
-            <motion.h2
-              initial={{ y: 20, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="text-4xl font-bold mb-6 text-gray-800 dark:text-white"
-            >
-              About Me
-            </motion.h2>
-            <div className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8">
+            <div className="text-2xl md:text-4xl text-gray-600 dark:text-gray-300 mb-6">
               <TypeAnimation
                 style={{
                   fontWeight: 700,
+                  whiteSpace: 'pre-line',
+                  display: 'block',
+                  lineHeight: '1.5',
                 }}
                 sequence={[
-                  "혁신적인 개발자 경험을 만들어가는 소프트웨어 엔지니어입니다.",
+                  "혁신적인 개발자 경험을 만들어가는\n소프트웨어 엔지니어입니다.",
                   2000,
-                  "개발자 경험을 중시하는 DX 개발자입니다.",
+                  "개발자 경험을 중시하는\nDX 개발자입니다.",
                   2000,
-                  "유저의 피드백으로 성장하는 애자일한 개발자입니다.",
+                  "유저의 피드백으로 성장하는\n애자일한 개발자입니다.",
                   2000,
                 ]}
-                wrapper="span"
+                wrapper="div"
                 speed={50}
                 repeat={Infinity}
                 className="font-medium"

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { FaCode, FaGithub, FaExternalLinkAlt, FaRocket } from "react-icons/fa";
+import { FaCode, FaGithub, FaExternalLinkAlt, FaRocket, FaImage } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { projects } from "@/data/projects";
 import type { ValidatedProject } from "@/data/projects";
@@ -10,6 +10,7 @@ import ScrollReveal from "@/shared/components/animations/motion/ScrollReveal";
 import HoverScale from "@/shared/components/animations/motion/HoverScale";
 import { SectionLayout } from "@/shared/components/layout/SectionLayout";
 import { IconType } from "react-icons";
+import { motion } from "framer-motion";
 
 const Projects = () => {
   const router = useRouter();
@@ -17,96 +18,100 @@ const Projects = () => {
   return (
     <SectionLayout title="Projects" icon={FaCode} id="projects">
       <div className="max-w-6xl mx-auto">
-        <div className="space-y-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 auto-rows-auto gap-8 grid-flow-row-dense">
           {projects.map((project: ValidatedProject, i) => (
-            <ScrollReveal key={project.title} delay={i * 0.2}>
-              <div
+            <ScrollReveal key={project.title} delay={i * 0.1}>
+              <motion.div
+                className="group relative bg-white dark:bg-gray-800/50 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl 
+                  transition-all duration-200 hover:-translate-y-2 break-inside-avoid mb-8 flex flex-col"
                 onClick={() => router.push(`/projects/${project.id}`)}
-                className="grid md:grid-cols-2 gap-8 p-8 rounded-xl cursor-pointer backdrop-blur-sm
-                  bg-white/70 dark:bg-gray-900/30 
-                  shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.16)]
-                  dark:shadow-[0_8px_30px_rgb(0,0,0,0.3)] dark:hover:shadow-[0_8px_30px_rgb(0,0,0,0.4)]
-                  transition-all duration-300"
+                whileHover={{ scale: 1.02 }}
+                transition={{ 
+                  type: "spring", 
+                  stiffness: 400,
+                  damping: 20,
+                  mass: 0.5
+                }}
               >
-                <HoverScale scale={1.02}>
-                  <div className="relative aspect-video overflow-hidden rounded-lg">
-                    {project.images ? (
+                {/* 썸네일 이미지 */}
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  {project.images ? (
+                    <>
                       <Image
                         src={project.images[0]}
                         alt={project.title}
                         fill
-                        className="object-cover"
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
                       />
-                    ) : (
-                      <div className="h-full w-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                        <p className="text-gray-600 dark:text-gray-300 text-lg font-bold">
-                          No Image
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                </HoverScale>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    </>
+                  ) : (
+                    <div className="h-full w-full bg-gradient-to-br from-purple-100 to-purple-50 dark:from-purple-900/30 dark:to-gray-800/50 flex flex-col items-center justify-center p-8">
+                      <FaImage className="w-16 h-16 text-purple-300 dark:text-purple-600 mb-4" />
+                      <p className="text-purple-500 dark:text-purple-400 text-lg font-medium text-center">
+                        No Preview Available
+                      </p>
+                    </div>
+                  )}
+                </div>
 
-                <div className="flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-2xl font-bold text-gray-800 dark:text-white">
+                {/* 프로젝트 정보 */}
+                <div className="flex flex-col h-full p-6">
+                  <div className="flex-grow space-y-4">
+                    <h3 className="text-2xl font-bold text-gray-800 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
                       {project.title}
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300">
+                    <p className="text-gray-600 dark:text-gray-300 line-clamp-2">
                       {project.description}
                     </p>
 
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {project.techStack.Frontend?.map((tech) => (
-                        <HoverScale key={tech}>
+                    {/* 기술 스택 태그 */}
+                    <div className="flex flex-wrap gap-2">
+                      {Object.entries(project.techStack).flatMap(([category, techs]) =>
+                        techs.slice(0, 3).map((tech) => (
                           <span
-                            className="px-3 py-1 rounded-full text-sm 
-                              bg-purple-100 text-purple-600
-                              dark:bg-purple-900/30 dark:text-purple-300"
+                            key={tech}
+                            className="px-3 py-1 text-sm rounded-full bg-purple-100 dark:bg-purple-900/30 
+                              text-purple-600 dark:text-purple-400 font-medium"
                           >
                             {tech}
                           </span>
-                        </HoverScale>
-                      ))}
+                        ))
+                      )}
                     </div>
                   </div>
 
-                  <div className="flex gap-4">
-                    {project.github && (
-                      <HoverScale>
-                        <Link
+                  {/* 링크 버튼 */}
+                  {(project.github || project.demo) && (
+                    <div className="flex items-center gap-4 pt-4 mt-4 border-t border-gray-100 dark:border-gray-700">
+                      {project.github && (
+                        <a
                           href={project.github}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-2 px-4 py-2 rounded-lg 
-                            bg-gray-100 text-gray-700 hover:bg-gray-200
-                            dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
                           onClick={(e) => e.stopPropagation()}
+                          className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
                         >
-                          <FaGithub />
-                          <span>GitHub</span>
-                        </Link>
-                      </HoverScale>
-                    )}
-                    {project.demo && (
-                      <HoverScale>
-                        <Link
+                          <FaGithub size={20} />
+                          <span className="text-sm font-medium">GitHub</span>
+                        </a>
+                      )}
+                      {project.demo && (
+                        <a
                           href={project.demo}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-2 px-4 py-2 rounded-lg 
-                            bg-purple-100 text-purple-600 hover:bg-purple-200
-                            dark:bg-purple-900/30 dark:text-purple-300 dark:hover:bg-purple-800/30"
                           onClick={(e) => e.stopPropagation()}
+                          className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
                         >
-                          <FaExternalLinkAlt />
-                          <span>Demo</span>
-                        </Link>
-                      </HoverScale>
-                    )}
-                  </div>
+                          <FaRocket size={20} />
+                          <span className="text-sm font-medium">Demo</span>
+                        </a>
+                      )}
+                    </div>
+                  )}
                 </div>
-              </div>
+              </motion.div>
             </ScrollReveal>
           ))}
         </div>
