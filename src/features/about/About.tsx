@@ -87,7 +87,7 @@ const About = () => {
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
   return (
-    <SectionLayout title="About Me" icon={FaUser}>
+    <SectionLayout id="about" title="About Me" icon={FaUser}>
       <motion.div
         className="max-w-6xl mx-auto"
         initial={{ opacity: 0 }}

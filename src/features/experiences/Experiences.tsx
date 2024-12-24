@@ -46,7 +46,13 @@ const experiences: Experience[] = [
       "'우땅콘' 컨퍼런스를 통해 시니어 개발자들의 경험 공유 세션 기획",
     ],
     icon: <IoLibrary className="text-2xl" />,
-    images: ["/images/library/1.jpg", "/images/library/2.jpg"],
+    images: [
+      "/images/uddang/uddang-1.jpeg",
+      "/images/uddang/uddang-2.jpeg",
+      "/images/uddang/uddang-3.jpeg",
+      "/images/uddang/uddang-4.jpeg",
+      "/images/uddang/uddang-5.jpeg",
+    ],
     color: "blue",
   },
   {
@@ -90,7 +96,13 @@ const experiences: Experience[] = [
       "학과 학생 대상 코딩 교육자 양성 프로그램 기획",
     ],
     icon: <FaBookReader className="text-2xl" />,
-    images: ["/images/tellus/1.jpg", "/images/tellus/2.jpg"],
+    images: [
+      "/images/coding-service/coding-service-0.jpeg",
+      "/images/coding-service/coding-service-1.jpeg",
+      "/images/coding-service/coding-service-2.jpeg",
+      "/images/coding-service/coding-service-3.jpeg",
+      "/images/coding-service/coding-service-4.jpeg",
+    ],
     color: "yellow",
   },
   {
@@ -105,6 +117,9 @@ const experiences: Experience[] = [
       "고객 응대를 통한 커뮤니케이션 능력 향상",
     ],
     icon: <FaStore className="text-2xl" />,
+    images: [
+      "/images/oliveyoung/oliveyoung-1.jpeg",
+    ],
     color: "pink",
   },
 ];

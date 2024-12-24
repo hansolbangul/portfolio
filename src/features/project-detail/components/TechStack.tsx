@@ -13,7 +13,7 @@ export default function TechStack({ project }: TechStackProps) {
   );
 
   return (
-    <ScrollReveal>
+    <>
       <div className="p-8 rounded-xl mb-12 bg-white dark:bg-gray-800 shadow-lg">
         <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">
           Tech Stack
@@ -43,6 +43,6 @@ export default function TechStack({ project }: TechStackProps) {
           )}
         </div>
       </div>
-    </ScrollReveal>
+    </>
   );
 }

@@ -9,7 +9,7 @@ interface FeaturesProps {
 
 export default function Features({ project }: FeaturesProps) {
   return (
-    <ScrollReveal>
+    <>
       <div className="p-8 rounded-xl mb-12 bg-white dark:bg-gray-800 shadow-lg">
         <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">
           Key Features
@@ -25,6 +25,6 @@ export default function Features({ project }: FeaturesProps) {
           ))}
         </ul>
       </div>
-    </ScrollReveal>
+    </>
   );
 }

@@ -9,7 +9,7 @@ interface ProjectInfoProps {
 
 export default function ProjectInfo({ project }: ProjectInfoProps) {
   return (
-    <ScrollReveal>
+    <>
       <div className="grid md:grid-cols-3 gap-8 mb-12">
         <div className="p-6 rounded-xl bg-white dark:bg-gray-800 shadow-lg">
           <h3 className="text-xl font-semibold mb-3 text-gray-800 dark:text-white">
@@ -36,6 +36,6 @@ export default function ProjectInfo({ project }: ProjectInfoProps) {
           </p>
         </div>
       </div>
-    </ScrollReveal>
+    </>
   );
 }
