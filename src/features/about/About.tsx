@@ -168,6 +168,28 @@ const workExperience = [
   },
 ];
 
+const calculateDuration = (
+  startDate: string,
+  endDate: string = "현재"
+): string => {
+  const start = new Date(startDate.replace(".", "-"));
+  const end =
+    endDate === "현재" ? new Date() : new Date(endDate.replace(".", "-"));
+
+  const months =
+    (end.getFullYear() - start.getFullYear()) * 12 +
+    (end.getMonth() - start.getMonth());
+  const years = Math.floor(months / 12);
+  const remainingMonths = months % 12;
+
+  if (years === 0) {
+    return `(${remainingMonths}개월)`;
+  } else if (remainingMonths === 0) {
+    return `(${years}년)`;
+  }
+  return `(${years}년 ${remainingMonths}개월)`;
+};
+
 const About = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [expandedWork, setExpandedWork] = useState<number | null>(null);
@@ -312,7 +334,13 @@ const About = () => {
                       <div className="flex items-center gap-4">
                         <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
                           <FaCalendar className="w-4 h-4" />
-                          <span>{work.period}</span>
+                          <span>
+                            {work.period}{" "}
+                            {(() => {
+                              const [start, end] = work.period.split(" - ");
+                              return calculateDuration(start, end);
+                            })()}
+                          </span>
                         </div>
                         {expandedWork === index ? (
                           <FaChevronUp className="text-gray-400" />

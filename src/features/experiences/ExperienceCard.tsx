@@ -1,10 +1,6 @@
 import { motion } from "framer-motion";
 import { Experience } from "@/data/experiences";
-import {
-  FaBookReader,
-  FaChalkboardTeacher,
-  FaStore,
-} from "react-icons/fa";
+import { FaBookReader, FaChalkboardTeacher, FaStore } from "react-icons/fa";
 import { IoLibrary } from "react-icons/io5";
 import { MdScience } from "react-icons/md";
 
@@ -21,8 +17,12 @@ interface ExperienceCardProps {
   index: number;
 }
 
-export default function ExperienceCard({ experience, index }: ExperienceCardProps) {
-  const IconComponent = iconComponents[experience.icon as keyof typeof iconComponents];
+export default function ExperienceCard({
+  experience,
+  index,
+}: ExperienceCardProps) {
+  const IconComponent =
+    iconComponents[experience.icon as keyof typeof iconComponents];
 
   return (
     <motion.div
@@ -33,7 +33,7 @@ export default function ExperienceCard({ experience, index }: ExperienceCardProp
       className="group relative h-full cursor-pointer overflow-hidden rounded-2xl bg-gradient-to-br from-white to-white/80 p-6 shadow-lg transition-all hover:shadow-xl dark:from-zinc-800 dark:to-zinc-800/80"
     >
       <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100 dark:to-white/5" />
-      
+
       <div className="relative flex flex-col gap-4">
         <div className="flex items-start gap-4">
           <div className="flex-1">
